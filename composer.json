@@ -1,0 +1,11 @@
+{
+	"name": "ml-express/xml",
+	"description": "ML Express generates XML",
+	"license": "MIT",
+	"require": {
+		"php": ">=5.4.0"
+	},
+	"autoload": {
+		"files": ["src/Xml.php", "src/XmlAttributes.php", "src/Adhoc.php"]
+	}
+}
