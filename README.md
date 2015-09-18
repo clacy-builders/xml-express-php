@@ -28,12 +28,12 @@ Run `composer install` or `composer update`.
     {
         const MIME_TYPE = 'application/vnd.google-earth.kml+xml';
         const FILENAME_EXTENSION = 'kml';
-        const NAMESPACE = 'http://www.opengis.net/kml/2.2';
+        const XML_NAMESPACE = 'http://www.opengis.net/kml/2.2';
     
         public static function createKml()
         {
             $kml = new Kml('kml');
-            $kml->attrib('xmlns', self::NAMESPACE);
+            $kml->attrib('xmlns', self::XML_NAMESPACE);
             return $kml;
         }
     
