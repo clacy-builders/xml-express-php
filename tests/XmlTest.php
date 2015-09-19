@@ -152,6 +152,34 @@ class XmlTest extends Express_TestCase
 				array(
 						TestXml::getContentTypeHeaderfield(),
 						"Content-Type: application/vnd.ml-express.tml+xml; charset=ISO-8859-15"
+				),
+
+				// setBoolAttrib()
+				array(
+						Html::createSub('option', 'PHP')->setValue('php')->setSelected(),
+						'<option value="php" selected>PHP</option>'
+				),
+				array(
+						Html::createSub('option', 'PHP')->setValue('php')->setSelected('php'),
+						'<option value="php" selected>PHP</option>'
+				),
+				array(
+						Html::createSub('option', 'PHP')->setValue('php')
+								->setSelected(['php', 'python']),
+						'<option value="php" selected>PHP</option>'
+				),
+				array(
+						Html::createSub('option', 'PHP')->setValue('php')->setSelected(false),
+						'<option value="php">PHP</option>'
+				),
+				array(
+						Html::createSub('option', 'PHP')->setValue('php')->setSelected('python'),
+						'<option value="php">PHP</option>'
+				),
+				array(
+						Html::createSub('option', 'PHP')->setValue('php')
+								->setSelected(['perl', 'python']),
+						'<option value="php">PHP</option>'
 				)
 		);
 	}

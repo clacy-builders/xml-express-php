@@ -21,6 +21,8 @@ class Xml
 
 	const DOCTYPE = null;
 	const SGML_MODE = false;
+	const ROOT_ELEMENT = null;
+	const XML_NAMESPACE = null;
 	const DEFAULT_LINE_BREAK = self::LF;
 	const DEFAULT_INDENTATION = self::HT;
 
@@ -336,6 +338,11 @@ class Xml
 		return $this->attrib('xml:lang', $lang);
 	}
 
+	public function setXmlns($xmlns, $identifier = null)
+	{
+		return $this->attrib(empty($identifier) ? 'xmlns' : 'xmlns:' . $identifier, $xmls);
+	}
+
 	/**
 	 * Sets the header fields "Content-Type" and "Content-Disposition".
 	 *
@@ -453,6 +460,28 @@ class Xml
 	{
 		$class = get_class($this);
 		return new $class($name, $content, $this->getRoot(), $this->getAncestor());
+	}
+
+	/**
+	 * Helpful for conditional attributes like <code>selected</code> in HTML.
+	 *
+	 * @param	mixed	$value				boolean or one or more (array) values to compare with.
+	 * @param	string	$attribute			Name of the attribute.
+	 * @param	string	$compareAttribute	Name of the attribute to compare with.
+	 * @return	Xml
+	 */
+	protected function booleanAttrib($value, $attribute, $compareAttribute)
+	{
+		if (!is_bool($value)) {
+			$compare = $this->attributes->getAttrib($compareAttribute);
+			if (is_array($value)) {
+				$value = in_array($compare, $value);
+			}
+			else {
+				$value = $value == $compare;
+			}
+		}
+		return $this->attrib($attribute, $value);
 	}
 
 	private final function setAncestorOption($options, $key)

@@ -33,4 +33,9 @@ class Html extends Xml
 	{
 		return (new AdhocHtml('html'))->attrib($lang)->attrib($manifest);
 	}
+
+	public function setSelected($selected = true)
+	{
+		return $this->setBoolAttrib($selected, 'selected', 'value');
+	}
 }
