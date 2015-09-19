@@ -227,7 +227,7 @@ class Xml
 	 * @param	string	$text
 	 * @return	Xml
 	 */
-	public final function text($text)
+	public final function appendText($text)
 	{
 		$this->appendChild($text);
 		return $this;
@@ -241,7 +241,7 @@ class Xml
 	 */
 	public function comment($content)
 	{
-		return $this->text('<!-- ' . $content . ' -->');
+		return $this->appendText('<!-- ' . $content . ' -->');
 	}
 
 	/**

@@ -128,9 +128,12 @@ class XmlTest extends Express_TestCase
 				array(TestSgml::createSub()->append('e', ''), '<e></e>'),
 				array(TestSgml::createSub()->append('e', 'content'), '<e>content</e>'),
 
-				// text()
+				// appendText()
 				array(
-						Xml::createSub()->append('e')->text('Lorem')->text('Ipsum')->text('Dolor'),
+						Xml::createSub()->append('e')
+								->appendText('Lorem')
+								->appendText('Ipsum')
+								->appendText('Dolor'),
 						"<e>\n\tLorem\n\tIpsum\n\tDolor\n</e>"
 				),
 
@@ -154,7 +157,7 @@ class XmlTest extends Express_TestCase
 						"Content-Type: application/vnd.ml-express.tml+xml; charset=ISO-8859-15"
 				),
 
-				// setBoolAttrib()
+				// booleanAttrib()
 				array(
 						Html::createSub('option', 'PHP')->setValue('php')->setSelected(),
 						'<option value="php" selected>PHP</option>'
