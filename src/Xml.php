@@ -247,11 +247,12 @@ class Xml
 	/**
 	 * Appends a new or sets an already existing attribute.
 	 *
-	 * @param	string			$name			Name of the attribute.
-	 * @param	mixed			$value			Value of the attribute.
-	 * @param	string|null		$glue
-	 * @param	boolean			$appendArray
-	 * @return	Xml
+	 * @param     string         $name           Name of the attribute.
+	 * @param     mixed          $value          Value of the attribute.
+	 * @param     string|null    $glue
+	 * @param     boolean        $appendArray    Whether arrays will be appended or reset
+	 *                                           the attribute.
+	 * @return    Xml
 	 */
 	public final function attrib($name, $value, $glue = null, $appendArray = false)
 	{
@@ -463,14 +464,15 @@ class Xml
 	}
 
 	/**
-	 * Helpful for conditional attributes like <code>selected</code> in HTML.
+	 * Helpful for boolean attributes depending on the value of another attribute
+	 * like <code>selected</code> in HTML.
 	 *
 	 * @param	mixed	$value				boolean or one or more (array) values to compare with.
 	 * @param	string	$attribute			Name of the attribute.
-	 * @param	string	$compareAttribute	Name of the attribute to compare with.
+	 * @param	string	$compareAttribute	Name of other attribute to compare with.
 	 * @return	Xml
 	 */
-	protected function booleanAttrib($value, $attribute, $compareAttribute)
+	protected final function booleanAttrib($value, $attribute, $compareAttribute)
 	{
 		if (!is_bool($value)) {
 			$compare = $this->attributes->getAttrib($compareAttribute);
@@ -482,6 +484,56 @@ class Xml
 			}
 		}
 		return $this->attrib($attribute, $value);
+	}
+
+	protected static final function pairedArrays($array1, $array2)
+	{
+		if ($array1 == null) {
+			$array1 = array_keys($array2);
+			$array2 = array_values($array2);
+		}
+		else if (isset($array1[0]) && (is_array($array1[0]) || is_object($array1[0]))) {
+			$arr1 = array();
+			$arr2 = array();
+			if (!isset($array2)) {
+				$array2 = self::keys($array1[0]);
+			}
+			foreach ($array1 as $i => $arr) {
+				$arr1[] = self::value($arr, $array2[0]);
+				$arr2[] = self::value($arr, $array2[1]);
+			}
+			$array1 = $arr1;
+			$array2 = $arr2;
+		} else {
+			$array1 = array_values($array1);
+			$array2 = array_values($array2);
+		}
+		return array($array1, $array2);
+	}
+
+	protected static function value($obj, $key)
+	{
+		if (is_array($obj) && isset($obj[$key])) {
+			return $obj[$key];
+		}
+		if (is_object($obj) && isset($obj->{$key})) {
+			return $obj->{$key};
+		}
+		return '';
+	}
+
+	protected static function keys($obj, $keys = null)
+	{
+		if (is_array($obj)) {
+			$existingKeys = array_keys($obj);
+		}
+		else {
+			$existingKeys = array_keys(get_object_vars($obj));
+		}
+		if (is_array($keys)) {
+			return array_intersect($keys, $existingKeys);
+		}
+		return $existingKeys;
 	}
 
 	private final function setAncestorOption($options, $key)
