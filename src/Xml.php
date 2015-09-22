@@ -132,6 +132,26 @@ class Xml
 	}
 
 	/**
+	 * Returns a child element.
+	 *
+	 */
+	public final function getChild($index = 0)
+	{
+		return $this->children[$index];
+	}
+
+	/**
+	 * Removes a child element.
+	 *
+	 * @param int $index
+	 */
+	public function removeChild($index)
+	{
+		unset($this->children[$index]);
+		return $this;
+	}
+
+	/**
 	 * Set options for the current element and its child elements.
 	 *
 	 * Options currently provided are:
@@ -230,6 +250,27 @@ class Xml
 	public final function appendText($text)
 	{
 		$this->appendChild($text);
+		return $this;
+	}
+
+	public function appendLines($text)
+	{
+		if (is_string($text)) {
+			$options = $this->getOptions();
+			if ($options[self::OPTION_LINE_BREAK]) {
+				$text = str_replace("\t", $options[self::OPTION_INDENTATION], $text);
+				$text = explode($options[self::OPTION_LINE_BREAK], $text);
+			}
+			else {
+				$text = str_replace("\t", '', $text);
+				$text = str_replace("\n", '', $text);
+				$text = str_replace("\r", '', $text);
+				$text = array($text);
+			}
+		}
+		foreach ($text as $line) {
+			$this->appendText($line);
+		}
 		return $this;
 	}
 
@@ -353,7 +394,7 @@ class Xml
 	 * @param	boolean		$addExtension	Whether the filename extension
 	 * 										should be appended or not.
 	 */
-	public static function header($filename = null, $addExtension = true)
+	public static function headerfields($filename = null, $addExtension = true)
 	{
 		if (!empty($filename)) {
 			header(self::getContentDispositionHeaderfield($filename, $addExtension));
@@ -390,6 +431,11 @@ class Xml
 	{
 		return sprintf('Content-Type: %s; charset=%s',
 				static::MIME_TYPE, static::CHARACTER_ENCODING);
+	}
+
+	protected final function getOptions()
+	{
+		return $this->ancestor->options;
 	}
 
 	/**
@@ -486,55 +532,6 @@ class Xml
 		return $this->attrib($attribute, $value);
 	}
 
-	protected static final function pairedArrays($array1, $array2)
-	{
-		if ($array1 == null) {
-			$array1 = array_keys($array2);
-			$array2 = array_values($array2);
-		}
-		else if (isset($array1[0]) && (is_array($array1[0]) || is_object($array1[0]))) {
-			$arr1 = array();
-			$arr2 = array();
-			if (!isset($array2)) {
-				$array2 = self::keys($array1[0]);
-			}
-			foreach ($array1 as $i => $arr) {
-				$arr1[] = self::value($arr, $array2[0]);
-				$arr2[] = self::value($arr, $array2[1]);
-			}
-			$array1 = $arr1;
-			$array2 = $arr2;
-		} else {
-			$array1 = array_values($array1);
-			$array2 = array_values($array2);
-		}
-		return array($array1, $array2);
-	}
-
-	protected static function value($obj, $key)
-	{
-		if (is_array($obj) && isset($obj[$key])) {
-			return $obj[$key];
-		}
-		if (is_object($obj) && isset($obj->{$key})) {
-			return $obj->{$key};
-		}
-		return '';
-	}
-
-	protected static function keys($obj, $keys = null)
-	{
-		if (is_array($obj)) {
-			$existingKeys = array_keys($obj);
-		}
-		else {
-			$existingKeys = array_keys(get_object_vars($obj));
-		}
-		if (is_array($keys)) {
-			return array_intersect($keys, $existingKeys);
-		}
-		return $existingKeys;
-	}
 
 	private final function setAncestorOption($options, $key)
 	{

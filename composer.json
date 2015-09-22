@@ -6,6 +6,6 @@
 		"php": ">=5.4.0"
 	},
 	"autoload": {
-		"files": ["src/Xml.php", "src/XmlAttributes.php", "src/Adhoc.php"]
+		"files": ["src/Xml.php", "src/XmlAttributes.php", "src/Adhoc.php", "src/functions.php"]
 	}
 }
