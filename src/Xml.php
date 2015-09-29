@@ -249,7 +249,7 @@ class Xml
 	 */
 	public final function appendText($text)
 	{
-		$this->appendChild($text);
+		$this->appendChild((string) $text);
 		return $this;
 	}
 
@@ -309,10 +309,17 @@ class Xml
 	 */
 	public final function getMarkup($indentation = '')
 	{
+		$line = $this->getOption(self::OPTION_LINE_BREAK);
+		$tab = $this->getOption(self::OPTION_INDENTATION);
+
 		$xmlString = '';
 		if (empty($this->name)) {
-			foreach ($this->children as $child) {
+			$last = count($this->children) - 1;
+			foreach ($this->children as $i => $child) {
 				$xmlString .= $child->getMarkup($indentation);
+				if ($i < $last) {
+					$xmlString .= $line;
+				}
 			}
 			return $xmlString;
 		}
@@ -321,8 +328,6 @@ class Xml
 		$xmlDeclaration = $class::XML_DECLARATION;
 		$doctype = $class::DOCTYPE;
 		$sgmlMode = $class::SGML_MODE;
-		$line = $this->getOption(self::OPTION_LINE_BREAK);
-		$tab = $this->getOption(self::OPTION_INDENTATION);
 
 		// no linebreak -> no tabspace
 		$indent1 = $indentation;

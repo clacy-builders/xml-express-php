@@ -72,7 +72,7 @@ class XmlTest extends Express_TestCase
 						Xml::createSub()
 								->append('e', 'content')->getRoot()
 								->append('f', 'content'),
-						"<e>content</e><f>content</f>"
+						"<e>content</e>\n<f>content</f>"
 				),
 
 				// inject()
@@ -128,6 +128,26 @@ class XmlTest extends Express_TestCase
 				array(TestSgml::createSub()->append('e', ''), '<e></e>'),
 				array(TestSgml::createSub()->append('e', 'content'), '<e>content</e>'),
 
+				// append to parent without name
+				array(
+						function () {
+							$xml = Xml::createSub()->append('e')->append('f')->append(null);
+							$xml->append('g1');
+							$xml->append('g2', 'content');
+							return $xml;
+						},
+						"<e>\n\t<f>\n\t\t<g1/>\n\t\t<g2>content</g2>\n\t</f>\n</e>"
+				),
+				array(
+						function () {
+							$xml = Xml::createSub();
+							$xml->append('g1', 'content');
+							$xml->append('g2');
+							return Xml::createSub()->append('e')->append('f')->inject($xml);
+						},
+						"<e>\n\t<f>\n\t\t<g1>content</g1>\n\t\t<g2/>\n\t</f>\n</e>"
+				),
+
 				// appendText()
 				array(
 						Xml::createSub()->append('e')
@@ -135,6 +155,13 @@ class XmlTest extends Express_TestCase
 								->appendText('Ipsum')
 								->appendText('Dolor'),
 						"<e>\n\tLorem\n\tIpsum\n\tDolor\n</e>"
+				),
+				array(
+						Xml::createSub()->append('e', '')
+								->appendText(100)
+								->appendText(200)
+								->appendText(300),
+						"<e>\n\t100\n\t200\n\t300\n</e>"
 				),
 
 				// comment()
