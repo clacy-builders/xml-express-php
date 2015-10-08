@@ -59,3 +59,11 @@ function join($value, $glue = ' ')
 	if (is_array($value)) return implode($glue, $value);
 	return $value;
 }
+
+function formatDateTime(\DateTime $datetime, $format, $encoding = XML::UTF8) {
+	$datetimeStr = strftime($format, $datetime->getTimestamp());
+	if ($encoding == XML::UTF8) {
+		$datetimeStr = utf8_encode($datetimeStr);
+	}
+	return $datetimeStr;
+}
