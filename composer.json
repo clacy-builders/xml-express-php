@@ -1,6 +1,8 @@
 {
 	"name": "ml-express/xml",
-	"description": "ML Express generates XML",
+	"type": "library",
+	"description": "XML Express is a library for creating XML documents.",
+	"keywords": ["xml", "builder", "writer"],
 	"license": "MIT",
 	"require": {
 		"php": ">=5.4.0"
