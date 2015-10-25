@@ -210,7 +210,113 @@ class XmlTest extends Express_TestCase
 						Html::createSub('option', 'PHP')->setValue('php')
 								->setSelected(['perl', 'python']),
 						'<option value="php">PHP</option>'
-				)
+				),
+
+				// attrib()
+				array(
+						Xml::createSub('e')->attrib('attr', null),
+						'<e/>'
+				),
+				array(
+						Xml::createSub('e')->attrib('attr', false),
+						'<e/>'
+				),
+				array(
+						Xml::createSub('e')->attrib('attr', true),
+						'<e attr="attr"/>'
+				),
+				array(
+						TestSgml::createSub('e')->attrib('attr', true),
+						'<e attr>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', 1)
+								->attrib('attr', 2),
+						'<e attr="2"/>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', 1)
+								->attrib('attr', 2, ' '),
+						'<e attr="1 2"/>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', 1)
+								->attrib('attr', [2, 3]),
+						'<e attr="1"/>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', 1)
+								->attrib('attr', [2, 3], ' '),
+						'<e attr="2 3"/>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', 1)
+								->attrib('attr', [2, 3], ' ', true),
+						'<e attr="1 2 3"/>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', 1)
+								->attrib('attr', true, ' '),
+						'<e attr="attr"/>'
+				),
+				array(
+						Xml::createSub('e')->attrib('attr', 1, ' '),
+						'<e attr="1"/>'
+				),
+				array(
+						Xml::createSub('e')->attrib('attr', [1, 2]),
+						'<e/>'
+				),
+				array(
+						Xml::createSub('e')->attrib('attr', [1, 2], ' '),
+						'<e attr="1 2"/>'
+				),
+				array(
+						Xml::createSub('e')->attrib('attr', [1, 2], ' ', true),
+						'<e attr="1 2"/>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', null)
+								->attrib('attr', 2),
+						'<e attr="2"/>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', null)
+								->attrib('attr', 2, ' '),
+						'<e attr="2"/>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', null)
+								->attrib('attr', [2, 3]),
+						'<e/>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', null)
+								->attrib('attr', [2, 3], ' '),
+						'<e attr="2 3"/>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', null)
+								->attrib('attr', [2, 3], ' ', true),
+						'<e attr="2 3"/>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', null)
+								->attrib('attr', true, ' '),
+						'<e attr="attr"/>'
+				),
 		);
 	}
 }

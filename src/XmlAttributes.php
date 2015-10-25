@@ -41,6 +41,7 @@ class XmlAttributes
 		}
 		$append = $glue !== NULL
 				&& array_key_exists($name, $this->attributes)
+				&& !empty($this->attributes[$name])
 				&& !is_bool($value)
 				&& !in_array($value, explode(' ', $this->attributes[$name]));
 		if ($value !== null) {
