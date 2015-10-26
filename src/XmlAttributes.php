@@ -29,31 +29,41 @@ class XmlAttributes
 	 * @param	string|null		$glue
 	 * @param	boolean			$appendArray
 	 */
-	public function append($name, $value, $glue = null, $appendArray = false)
+	public function append($name, $value, $glue = null, $appendArray = false, $check = false)
 	{
 		if (empty($name)) return;
-		if (is_array($value)) {
-			if (is_string($glue)) {
-				$value = implode($glue, $value);
-				$glue = $appendArray ? $glue : null;
-			}
-			else return;
-		}
-		$append = $glue !== NULL
-				&& array_key_exists($name, $this->attributes)
+
+		$isArray = is_array($value);
+
+		if ($isArray & empty($glue)) return;
+
+		$append = !empty($glue)
 				&& !empty($this->attributes[$name])
-				&& !is_bool($value)
-				&& !in_array($value, explode(' ', $this->attributes[$name]));
-		if ($value !== null) {
-			if ($append) {
-				$this->attributes[$name] .= $glue . $value;
+				&& $value !== true
+				&& ($appendArray || !$isArray);
+		$check &= $append;
+
+		if ($append && empty($value)) return;
+
+		if ($check) {
+			$old = explode($glue, $this->attributes[$name]);
+			$new = $isArray ? $value : explode($glue, $value);
+
+			foreach ($new as $val) {
+				if (!in_array($val, $old)) {
+					$this->attributes[$name] .= $glue . $val;
+				}
 			}
-			else {
-				$this->attributes[$name] = $value;
-			}
+			return;
 		}
-		elseif (!$append) {
-			$this->attributes[$name] = null;
+		if ($isArray) {
+			$value = implode($glue, $value);
+		}
+		if ($append) {
+			$this->attributes[$name] .= $glue . $value;
+		}
+		else {
+			$this->attributes[$name] = $value;
 		}
 	}
 

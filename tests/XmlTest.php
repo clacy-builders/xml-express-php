@@ -317,6 +317,30 @@ class XmlTest extends Express_TestCase
 								->attrib('attr', true, ' '),
 						'<e attr="attr"/>'
 				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', '1 20 3')
+								->attrib('attr', '2 3 4', ' ', false, true),
+						'<e attr="1 20 3 2 4"/>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', '1 20 3')
+								->attrib('attr', '2 3 4', ' ', false, false),
+						'<e attr="1 20 3 2 3 4"/>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', '1 20 3')
+								->attrib('attr', [2, 3, 4], ' ', true, true),
+						'<e attr="1 20 3 2 4"/>'
+				),
+				array(
+						Xml::createSub('e')
+								->attrib('attr', '1 20 3')
+								->attrib('attr', [2, 3, 4], ' ', true, false),
+						'<e attr="1 20 3 2 3 4"/>'
+				)
 		);
 	}
 }

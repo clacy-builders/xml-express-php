@@ -295,9 +295,9 @@ class Xml
 	 *                                           the attribute.
 	 * @return    Xml
 	 */
-	public final function attrib($name, $value, $glue = null, $appendArray = false)
+	public final function attrib($name, $value, $glue = null, $appendArray = false, $check = true)
 	{
-		$this->attributes->append($name, $value, $glue, $appendArray);
+		$this->attributes->append($name, $value, $glue, $appendArray, $check);
 		return $this;
 	}
 
