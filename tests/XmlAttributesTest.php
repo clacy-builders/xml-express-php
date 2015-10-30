@@ -8,86 +8,102 @@ require_once __DIR__ . '/classes.php';
 
 class XmlAttributesTest extends \PHPUnit_Framework_TestCase
 {
-	public function attributeProvider() {
+	public function setAttribProvider()
+	{
 		return array(
-				array(' attribute="lorem ipsum"', 'lorem ipsum'),
-				array(' attribute=""', ''),
-				array('', null),
-				array('', array('lorem ipsum', null)),
-				array(' attribute="0"', 0),
-				array(array(' attribute="attribute"', ' attribute'), true),
-				array('', false),
-				array(array(' attribute="attribute"', ' attribute'), array(false, true)),
-				array('', array(true, false)),
-				array(' attribute="ipsum"', array('lorem', 'ipsum')),
-				array(' attribute="lorem ipsum"', array('lorem', 'ipsum'), ' '),
-				array(' attribute="lorem ipsum"', array(null, array('lorem', 'ipsum')), ' '),
-				array(' attribute="ipsum dolor"', array('lorem', array('ipsum', 'dolor')), ' '),
-				array(' attribute="lorem ipsum dolor"',
-						array('lorem', array('ipsum', 'dolor')), ' ', true),
-				array(' attribute="lorem"', array('lorem', array('ipsum', 'dolor')), null, true));
-	}
-
-	/**
-	 * @dataProvider attributeProvider
-	 */
-	public function testAttribute($expected, $values, $glue = null, $appendArray = false)
-	{
-		if (!is_array($expected)) {
-			$expected = array($expected, $expected);
-		}
-		if (!is_array($values)) {
-			$values = array($values);
-		}
-		foreach (array(false, true) as $sgmlMode) {
-			$ml = $sgmlMode ? new TestSgml : new TestXml;
-			$attributes = new XmlAttributes($ml);
-			foreach($values as $value) {
-				$attributes->append('attribute', $value, $glue, $appendArray);
-			}
-			$this->assertEquals($expected[$sgmlMode], $attributes->str());
-		}
-	}
-
-	public function noNameProvider()
-	{
-		return array(array(null), array(''), array(false));
-	}
-
-	/**
-	 * @dataProvider noNameProvider
-	 */
-	public function testNoName($name)
-	{
-		$attributes = new XmlAttributes(new TestXml);
-		$attributes->append($name, 'lorem ipsum');
-		$this->assertEquals('', $attributes->str());
-	}
-
-	public function testAttributes()
-	{
-		$attributes = new XmlAttributes(new TestXml);
-		$attributes->append('attr1', 'lorem');
-		$attributes->append('attr2', 'ipsum');
-		$this->assertEquals(' attr1="lorem" attr2="ipsum"', $attributes->str());
-	}
-
-	public function valueProvider() {
-		return array(
-				array('lorem ipsum', 'lorem ipsum'),
-				array('', ''),
-				array(true, true),
-				array(false, false),
-				array(null, null)
+				[null, '', false],
+				[null, '', true],
+				['foo', ' a="foo"', false],
+				['foo', ' a="foo"', true],
+				['', ' a=""', false],
+				['', ' a=""', true],
+				[false, '', false],
+				[false, '', true],
+				[true, ' a="a"', false],
+				[true, ' a', true]
 		);
 	}
 
 	/**
-	 * @dataProvider valueProvider
+	 * @dataProvider setAttribProvider
 	 */
-	public function testGetAttribute($value, $expected) {
-		$attributes = new XmlAttributes(new TestXml);
-		$attributes->append('attribute', $value);
-		$this->assertEquals($expected, $attributes->getAttrib('attribute'));
+	public function testSetAttrib($value, $expected, $sgml = false)
+	{
+		$xml = $sgml ? new TestSgml('e') : new TestXml('e');
+		$attributes = new XmlAttributes($xml);
+		$attributes->setAttrib('a', $value);
+		$this->assertEquals($expected, $attributes->str());
+	}
+
+	public function resetAttribProvider()
+	{
+		return array(
+				['lorem ipsum dolor dolores', false, ' a="lorem ipsum dolor dolores"'],
+				['lorem ipsum dolor dolores', true, ' a="lorem ipsum dolor dolores"'],
+				['lorem ipsum dolor ipsum', false, ' a="lorem ipsum dolor ipsum"'],
+				['lorem ipsum dolor ipsum', true, ' a="lorem ipsum dolor"'],
+				[['lorem', 'ipsum', 'dolor', 'dolores'], false, ' a="lorem ipsum dolor dolores"'],
+				[['lorem', 'ipsum dolor', 'dolores'], true, ' a="lorem ipsum dolor dolores"'],
+				[['lorem', 'ipsum', 'dolor', 'ipsum'], false, ' a="lorem ipsum dolor ipsum"'],
+				[['lorem', 'ipsum', 'dolor', 'ipsum'], true, ' a="lorem ipsum dolor"'],
+				['', false, ' a=""'],
+				['', true, ' a=""'],
+				[[], false, ' a=""'],
+				[[], true, ' a=""'],
+				[null, false, ''],
+				[null, true, ''],
+				[false, false, ''],
+				[false, true, ''],
+				[true, false, ' a="a"', false],
+				[true, true, ' a="a"', false],
+				[true, false, ' a', true],
+				[true, true, ' a', true],
+		);
+	}
+
+	/**
+	 * @dataProvider resetAttribProvider
+	 */
+	public function testResetAttrib($value, $check, $expected, $sgml = false)
+	{
+		$xml = $sgml ? new TestSgml('e') : new TestXml('e');
+		$attributes = new XmlAttributes($xml);
+		$attributes->resetAttrib('a', $value, ' ', $check);
+		$this->assertEquals($expected, $attributes->str());
+	}
+
+	public function appendToAttribProvider()
+	{
+		return array(
+				['ipsum dolor sit ipsum', false, ' a="lorem ipsum dolor ipsum dolor sit ipsum"'],
+				['ipsum dolor sit ipsum', true, ' a="lorem ipsum dolor sit"'],
+				[['ipsum', 'dolor', 'sit', 'ipsum'], false,
+						' a="lorem ipsum dolor ipsum dolor sit ipsum"'],
+				[['ipsum', 'dolor', 'sit', 'ipsum'], true, ' a="lorem ipsum dolor sit"'],
+				['', false, ' a="lorem ipsum dolor"'],
+				['', true, ' a="lorem ipsum dolor"'],
+				[[], false, ' a="lorem ipsum dolor"'],
+				[[], true, ' a="lorem ipsum dolor"'],
+				[null, false, ' a="lorem ipsum dolor"'],
+				[null, true, ' a="lorem ipsum dolor"'],
+				[false, false, ' a="lorem ipsum dolor"'],
+				[false, true, ' a="lorem ipsum dolor"'],
+				[true, false, ' a="lorem ipsum dolor"', false],
+				[true, true, ' a="lorem ipsum dolor"', false],
+				[true, false, ' a="lorem ipsum dolor"', true],
+				[true, true, ' a="lorem ipsum dolor"', true],
+		);
+	}
+
+	/**
+	 * @dataProvider appendToAttribProvider
+	 */
+	public function testAppendToAttrib($value, $check, $expected, $sgml = false)
+	{
+		$xml = $sgml ? new TestSgml('e') : new TestXml('e');
+		$attributes = new XmlAttributes($xml);
+		$attributes->resetAttrib('a', 'lorem ipsum dolor');
+		$attributes->appendToAttrib('a', $value, ' ', $check);
+		$this->assertEquals($expected, $attributes->str());
 	}
 }

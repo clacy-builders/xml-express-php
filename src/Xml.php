@@ -290,14 +290,23 @@ class Xml
 	 *
 	 * @param     string         $name           Name of the attribute.
 	 * @param     mixed          $value          Value of the attribute.
-	 * @param     string|null    $glue
-	 * @param     boolean        $appendArray    Whether arrays will be appended or reset
-	 *                                           the attribute.
 	 * @return    Xml
 	 */
-	public final function attrib($name, $value, $glue = null, $appendArray = false, $check = true)
+	public final function attrib($name, $value)
 	{
-		$this->attributes->append($name, $value, $glue, $appendArray, $check);
+		$this->attributes->setAttrib($name, $value);
+		return $this;
+	}
+
+	public function complexAttrib($name, $value, $delimiter = ' ', $check = false)
+	{
+		$this->attributes->resetAttrib($name, $value, $delimiter, $check);
+		return $this;
+	}
+
+	public function complexAttribAppend($name, $value, $delimiter = ' ', $check = false)
+	{
+		$this->attributes->appendToAttrib($name, $value, $delimiter, $check);
 		return $this;
 	}
 
@@ -578,8 +587,8 @@ class Xml
 	private final function xmlDecl()
 	{
 		$attributes = new XmlAttributes($this);
-		$attributes->append('version', static::XML_VERSION);
-		$attributes->append('encoding', static::CHARACTER_ENCODING);
+		$attributes->setAttrib('version', static::XML_VERSION);
+		$attributes->setAttrib('encoding', static::CHARACTER_ENCODING);
 		return '<?xml' . $attributes->str() . ' ?>' . $this->getOption(self::OPTION_LINE_BREAK);
 	}
 }

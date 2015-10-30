@@ -12,6 +12,8 @@ class TestXml extends Xml
 
 class TestSgml extends TestXml
 {
+	//use ClassAttribute;
+
 	const SGML_MODE = true;
 	const DOCTYPE = '<!DOCTYPE tml>';
 }

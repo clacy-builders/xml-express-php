@@ -9,7 +9,7 @@ Add the following to your project's `composer.json` file:
 ```json
 {
     "require": {
-        "ml-express/xml": "0.1.*"
+        "ml-express/xml": ">=0.2"
     }
 }
 ```
@@ -36,6 +36,7 @@ class Kml extends Xml
         $kml->attrib('xmlns', self::XML_NAMESPACE);
         return $kml;
     }
+
     public function placemark($name, $description, $longitude, $latitude, $altitude = 0)
     {
         $pm = $this->append('Placemark');
