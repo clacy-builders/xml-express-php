@@ -10,7 +10,7 @@
 	"autoload": {
 		"files": [
 			"src/Xml.php", "src/XmlAttributes.php", "src/Adhoc.php", "src/functions.php",
-			"src/methods/ClassAttribute.php"
+			"src/methods/ClassAttribute.php", "src/methods/StyleAttribute.php"
 		]
 	}
 }
