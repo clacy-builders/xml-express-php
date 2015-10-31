@@ -41,7 +41,7 @@ class XmlAttributes
 	}
 
 	/**
-	 * Sets a composable attribute like <code>class</code>, <code>style</code> (HTML)
+	 * Sets or appends to a composable attribute like <code>class</code> (HTML)
 	 * or <code>points</code> (SVG).
 	 *
 	 * @param name string
@@ -56,11 +56,20 @@ class XmlAttributes
 	 * @param check boolean [optional]
 	 * <p>Whether multiple entries shall be removed or not.</p>
 	 */
-	public function resetAttrib($name, $value, $delimiter = ' ', $check = false)
+	public function altAttrib($name, $value, $delimiter = ' ', $check = false)
 	{
-		if ($value === null || is_bool($value)) {
+		if (is_bool($value) || (empty($this->getAttrib($name)) && empty($value))) {
 			$this->setAttrib($name, $value);
 			return;
+		}
+		if (!empty($this->getAttrib($name))) {
+			if (empty($value)) return;
+			if (is_array($value)) {
+				$value = array_merge(explode($delimiter, $this->getAttrib($name)), $value);
+			}
+			else {
+				$value = $this->getAttrib($name) . $delimiter . $value;
+			}
 		}
 		if ($check) {
 			if (!is_array($value)) {
@@ -72,40 +81,6 @@ class XmlAttributes
 			$value = implode($delimiter, $value);
 		}
 		$this->setAttrib($name, $value);
-	}
-
-	/**
-	 * Append to a composable attribute like <code>class</code>, <code>style</code> (HTML)
-	 * or <code>points</code> (SVG).
-	 *
-	 * @param name string
-	 * <p>Name of the attribute.</p>
-	 *
-	 * @param value string|array|null
-	 * <p>Value of the attribute.</p>
-	 *
-	 * @param delimiter string [optional]
-	 * <p>The boundary string.</p>
-	 *
-	 * @param check boolean [optional]
-	 * <p>Whether multiple entries shall be removed or not.</p>
-	 */
-	public function appendToAttrib($name, $value, $delimiter = ' ', $check = false)
-	{
-		if (empty($value) || is_bool($value)) return;
-		if (empty($this->getAttrib($name))) {
-			$this->resetAttrib($name, $value, $delimiter, $check);
-		}
-		elseif (is_array($value)) {
-			$this->resetAttrib($name,
-					array_merge(explode($delimiter, $this->getAttrib($name)), $value),
-					$delimiter, $check);
-		}
-		else {
-			$this->resetAttrib($name,
-					$this->getAttrib($name) . $delimiter . $value,
-					$delimiter, $check);
-		}
 	}
 
 	/**

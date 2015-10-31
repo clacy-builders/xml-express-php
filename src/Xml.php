@@ -300,13 +300,7 @@ class Xml
 
 	public function complexAttrib($name, $value, $delimiter = ' ', $check = false)
 	{
-		$this->attributes->resetAttrib($name, $value, $delimiter, $check);
-		return $this;
-	}
-
-	public function complexAttribAppend($name, $value, $delimiter = ' ', $check = false)
-	{
-		$this->attributes->appendToAttrib($name, $value, $delimiter, $check);
+		$this->attributes->altAttrib($name, $value, $delimiter, $check);
 		return $this;
 	}
 

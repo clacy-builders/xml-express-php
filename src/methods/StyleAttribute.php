@@ -5,29 +5,16 @@ namespace ML_Express;
 trait StyleAttribute
 {
 	/**
-	 * Sets or resets the style attribute.
-	 *
-	 * @param style mixed
-	 *
-	 * @param value string [optional]
-	 */
-	public function setStyle($style, $value = null)
-	{
- 		$style = self::prepare($style, $value);
-		return $this->complexAttrib('style', $style, ';');
-	}
-
-	/**
 	 * Appends one or more CSS properties to the style attribute.
 	 *
 	 * @param style mixed
 	 *
 	 * @param value string [optional]
 	 */
-	public function addStyle($style, $value = null)
+	public function altStyle($style, $value = null)
 	{
 		$style = self::prepare($style, $value);
-		return $this->complexAttribAppend('style', $style, ';');
+		return $this->complexAttrib('style', $style, ';');
 	}
 
 	private static function prepare($style, $value)
