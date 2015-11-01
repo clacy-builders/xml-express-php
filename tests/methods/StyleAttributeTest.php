@@ -19,37 +19,37 @@ class StyleAttributeTest extends Express_TestCase
 		return array(
 				array(
 						StyleAttrXml::createSub('circle')
-								->altStyle(null),
+								->setStyle(null),
 						'<circle/>'
 				),
 				array(
 						StyleAttrXml::createSub('circle')
-								->altStyle('stroke-opacity: 0.5')
-								->altStyle('stroke: #567; fill: #def'),
+								->setStyle('stroke-opacity: 0.5')
+								->setStyle('stroke: #567; fill: #def'),
 						'<circle style="stroke-opacity: 0.5;stroke: #567; fill: #def"/>'
 				),
 				array(
 						StyleAttrXml::createSub('circle')
-								->altStyle('stroke-opacity: 0.5')
-								->altStyle(null),
+								->setStyle('stroke-opacity: 0.5')
+								->setStyle(null),
 						'<circle style="stroke-opacity: 0.5"/>'
 				),
 				array(
 						StyleAttrXml::createSub('circle')
-								->altStyle('stroke-opacity: 0.5')
-								->altStyle('fill', '#567'),
+								->setStyle('stroke-opacity: 0.5')
+								->setStyle('fill', '#567'),
 						'<circle style="stroke-opacity: 0.5;fill: #567"/>'
 				),
 				array(
 						StyleAttrXml::createSub('circle')
-								->altStyle('stroke-opacity: 0.5')
-								->altStyle(['stroke: #567', 'fill: #def']),
+								->setStyle('stroke-opacity: 0.5')
+								->setStyle(['stroke: #567', 'fill: #def']),
 						'<circle style="stroke-opacity: 0.5;stroke: #567;fill: #def"/>'
 				),
 				array(
 						StyleAttrXml::createSub('circle')
-								->altStyle('stroke-opacity: 0.5')
-								->altStyle(['stroke' => '#567', 'fill' => '#def']),
+								->setStyle('stroke-opacity: 0.5')
+								->setStyle(['stroke' => '#567', 'fill' => '#def']),
 						'<circle style="stroke-opacity: 0.5;stroke: #567;fill: #def"/>'
 				)
 		);

@@ -19,50 +19,50 @@ class ClassAttributeTest extends Express_TestCase
 	public function provider()
 	{
 		return array(
-				// altClass()
+				// setClass()
 				array(
 						ClassAttrXml::createSub('div')
-								->altClass('lorem ipsum dolores')
-								->altClass('dolor ipsum lorem'),
+								->setClass('lorem ipsum dolores')
+								->setClass('dolor ipsum lorem'),
 						'<div class="lorem ipsum dolores dolor">'
 				),
 				array(
 						ClassAttrXml::createSub('div')
-								->altClass('lorem ipsum dolor')
-								->altClass('dolores ipsum lorem dolores'),
+								->setClass('lorem ipsum dolor')
+								->setClass('dolores ipsum lorem dolores'),
 						'<div class="lorem ipsum dolor dolores">'
 				),
 				array(
 						ClassAttrXml::createSub('div')
-								->altClass('lorem ipsum dolores')
-								->altClass(['dolor', 'ipsum', 'lorem']),
+								->setClass('lorem ipsum dolores')
+								->setClass(['dolor', 'ipsum', 'lorem']),
 						'<div class="lorem ipsum dolores dolor">'
 				),
 				array(
 						ClassAttrXml::createSub('div')
-								->altClass('lorem ipsum dolor'),
+								->setClass('lorem ipsum dolor'),
 						'<div class="lorem ipsum dolor">'
 				),
 				array(
 						ClassAttrXml::createSub('div')
-								->altClass(null)
-								->altClass('lorem ipsum dolor'),
+								->setClass(null)
+								->setClass('lorem ipsum dolor'),
 						'<div class="lorem ipsum dolor">'
 				),
 				array(
 						ClassAttrXml::createSub('div')
-								->altClass('lorem ipsum dolor')
-								->altClass(null),
+								->setClass('lorem ipsum dolor')
+								->setClass(null),
 						'<div class="lorem ipsum dolor">'
 				),
 				array(
 						ClassAttrXml::createSub('div')
-								->altClass(['lorem', 'ipsum', 'dolor', 'ipsum', 'lorem']),
+								->setClass(['lorem', 'ipsum', 'dolor', 'ipsum', 'lorem']),
 						'<div class="lorem ipsum dolor">'
 				),
 				array(
 						ClassAttrXml::createSub('div')
-								->altClass(null),
+								->setClass(null),
 						'<div>'
 				),
 		);

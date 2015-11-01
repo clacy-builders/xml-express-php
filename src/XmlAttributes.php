@@ -56,7 +56,7 @@ class XmlAttributes
 	 * @param check boolean [optional]
 	 * <p>Whether multiple entries shall be removed or not.</p>
 	 */
-	public function altAttrib($name, $value, $delimiter = ' ', $check = false)
+	public function setComplexAttrib($name, $value, $delimiter = ' ', $check = false)
 	{
 		if (is_bool($value) || (empty($this->getAttrib($name)) && empty($value))) {
 			$this->setAttrib($name, $value);

@@ -9,7 +9,7 @@ Add the following to your project's `composer.json` file:
 ```json
 {
     "require": {
-        "ml-express/xml": ">=0.3"
+        "ml-express/xml": ">=0.4"
     }
 }
 ```

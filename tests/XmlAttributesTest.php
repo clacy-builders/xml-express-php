@@ -14,9 +14,9 @@ class Attributes extends XmlAttributes
 		return $this;
 	}
 
-	public function altAttrib($name, $value, $delimiter = ' ', $check = false)
+	public function setComplexAttrib($name, $value, $delimiter = ' ', $check = false)
 	{
-		parent::altAttrib($name, $value, $delimiter, $check);
+		parent::setComplexAttrib($name, $value, $delimiter, $check);
 		return $this;
 	}
 }
@@ -76,82 +76,82 @@ class XmlAttributesTest extends \PHPUnit_Framework_TestCase
 								->setAttrib('a', 'lorem'),
 						' a="lorem" b="ipsum"'
 				),
-				// altAttrib()
+				// setComplexAttrib()
 				array(
 						self::attr()
-								->altAttrib('a', 'lorem ipsum dolor lorem')
-								->altAttrib('a', 'ipsum dolores'),
+								->setComplexAttrib('a', 'lorem ipsum dolor lorem')
+								->setComplexAttrib('a', 'ipsum dolores'),
 						' a="lorem ipsum dolor lorem ipsum dolores"'
 				),
 				array(
 						self::attr()
-								->altAttrib('a', 'lorem ipsum dolor lorem')
-								->altAttrib('a', 'ipsum dolores ipsum', ' ', true),
+								->setComplexAttrib('a', 'lorem ipsum dolor lorem')
+								->setComplexAttrib('a', 'ipsum dolores ipsum', ' ', true),
 						' a="lorem ipsum dolor dolores"'
 				),
 				array(
 						self::attr()
-								->altAttrib('a', 'lorem ipsum dolor lorem')
-								->altAttrib('a', ['ipsum', 'dolores']),
+								->setComplexAttrib('a', 'lorem ipsum dolor lorem')
+								->setComplexAttrib('a', ['ipsum', 'dolores']),
 						' a="lorem ipsum dolor lorem ipsum dolores"'
 				),
 				array(
 						self::attr()
-								->altAttrib('a', 'lorem ipsum dolor lorem')
-								->altAttrib('a', ['ipsum', 'dolores', 'ipsum'], ' ', true),
+								->setComplexAttrib('a', 'lorem ipsum dolor lorem')
+								->setComplexAttrib('a', ['ipsum', 'dolores', 'ipsum'], ' ', true),
 						' a="lorem ipsum dolor dolores"'
 				),
 				array(
 						self::attr()
-								->altAttrib('a', 'lorem ipsum dolor')
-								->altAttrib('a', true),
+								->setComplexAttrib('a', 'lorem ipsum dolor')
+								->setComplexAttrib('a', true),
 						' a="a"'
 				),
 				array(
 						self::attr(true)
-								->altAttrib('a', 'lorem ipsum dolor')
-								->altAttrib('a', true, ' ', true),
+								->setComplexAttrib('a', 'lorem ipsum dolor')
+								->setComplexAttrib('a', true, ' ', true),
 						' a'
 				),
 				array(
 						self::attr()
-								->altAttrib('a', 'lorem ipsum dolor')
-								->altAttrib('a', false),
+								->setComplexAttrib('a', 'lorem ipsum dolor')
+								->setComplexAttrib('a', false),
 						''
 				),
 				array(
 						self::attr(true)
-								->altAttrib('a', 'lorem ipsum dolor')
-								->altAttrib('a', false, ' ', true),
+								->setComplexAttrib('a', 'lorem ipsum dolor')
+								->setComplexAttrib('a', false, ' ', true),
 						''
 				),
 				array(
 						self::attr()
-								->altAttrib('a', 'lorem ipsum dolor')
-								->altAttrib('a', null),
+								->setComplexAttrib('a', 'lorem ipsum dolor')
+								->setComplexAttrib('a', null),
 						' a="lorem ipsum dolor"'
 				),
 				array(
 						self::attr()
-								->altAttrib('a', 'lorem ipsum dolor')
-								->altAttrib('a', null, ' ', true),
+								->setComplexAttrib('a', 'lorem ipsum dolor')
+								->setComplexAttrib('a', null, ' ', true),
 						' a="lorem ipsum dolor"'
 				),
 				array(
 						self::attr()
-								->altAttrib('x', null),
+								->setComplexAttrib('x', null),
 						''
 				),
 				array(
 						self::attr()
-								->altAttrib('y', null, ' ', true),
+								->setComplexAttrib('y', null, ' ', true),
 						''
 				),
 				array(
 						self::attr()
-								->altAttrib('a', null)
-								->altAttrib('b', 'ipsum')
-								->altAttrib('a', 'lorem'),
+								->setComplexAttrib('a', null)
+								->setComplexAttrib('b', 'ipsum')
+								->setComplexAttrib('a', 'lorem'),
 						' a="lorem" b="ipsum"'
 				)
 		);

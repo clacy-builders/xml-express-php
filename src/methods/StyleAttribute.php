@@ -7,11 +7,20 @@ trait StyleAttribute
 	/**
 	 * Appends one or more CSS properties to the style attribute.
 	 *
-	 * @param style mixed
+	 * Examples:<ul>
+	 * <li><code>setStyle('width', '40em')</code>
+	 * <li><code>setStyle('width: 40em;color: #369')</code>
+	 * <li><code>setStyle(['width: 40em', 'color: #369'])</code>
+	 * <li><code>setStyle(['width' => '40em', 'color' => '#369'])</code>
+	 * </ul>
+	 *
+	 * @param style string|array|null
+	 * <p>See examples above.</p>
 	 *
 	 * @param value string [optional]
+	 * <p>See first example above.</p>
 	 */
-	public function altStyle($style, $value = null)
+	public function setStyle($style, $value = null)
 	{
 		$style = self::prepare($style, $value);
 		return $this->complexAttrib('style', $style, ';');
