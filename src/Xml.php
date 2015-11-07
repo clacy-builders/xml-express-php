@@ -540,7 +540,6 @@ class Xml
 		return $this->attrib($attribute, $value);
 	}
 
-
 	private final function setAncestorOption($options, $key)
 	{
 		if (isset($options[$key])) {
