@@ -1,6 +1,6 @@
 <?php
 
-namespace ML_Express;
+namespace ML_Express\Tests;
 
 require_once __DIR__ . '/../src/functions.php';
 

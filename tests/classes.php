@@ -1,6 +1,9 @@
 <?php
 
-namespace ML_Express;
+namespace ML_Express\Tests;
+
+use ML_Express\Xml;
+use ML_Express\Adhoc;
 
 class TestXml extends Xml
 {

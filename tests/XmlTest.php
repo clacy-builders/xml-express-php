@@ -1,12 +1,16 @@
 <?php
 
-namespace ML_Express;
+namespace ML_Express\Tests;
 
 require_once __DIR__ . '/../src/XmlAttributes.php';
 require_once __DIR__ . '/../src/Xml.php';
 require_once __DIR__ . '/../src/Adhoc.php';
 require_once __DIR__ . '/Express_TestCase.php';
 require_once __DIR__ . '/classes.php';
+
+use ML_Express\XmlAttributes;
+use ML_Express\XML;
+use ML_Express\Adhoc;
 
 class XmlTest extends Express_TestCase
 {
