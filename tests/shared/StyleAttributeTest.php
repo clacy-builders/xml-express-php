@@ -4,7 +4,7 @@ namespace ML_Express;
 
 require_once __DIR__ . '/../../src/XmlAttributes.php';
 require_once __DIR__ . '/../../src/Xml.php';
-require_once __DIR__ . '/../../src/methods/StyleAttribute.php';
+require_once __DIR__ . '/../../src/shared/StyleAttribute.php';
 require_once __DIR__ . '/../Express_TestCase.php';
 
 class StyleAttrXml extends Xml

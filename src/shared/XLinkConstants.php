@@ -1,6 +1,6 @@
 <?php
 
-namespace ML_Express;
+namespace ML_Express\Shared;
 
 interface XLinkConstants
 {

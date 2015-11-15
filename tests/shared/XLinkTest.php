@@ -4,8 +4,8 @@ namespace ML_Express;
 
 require_once __DIR__ . '/../../src/XmlAttributes.php';
 require_once __DIR__ . '/../../src/Xml.php';
-require_once __DIR__ . '/../../src/methods/XLink.php';
-require_once __DIR__ . '/../../src/methods/XLinkConstants.php';
+require_once __DIR__ . '/../../src/shared/XLink.php';
+require_once __DIR__ . '/../../src/shared/XLinkConstants.php';
 require_once __DIR__ . '/../Express_TestCase.php';
 
 class XLinkXml extends Xml implements XLinkConstants

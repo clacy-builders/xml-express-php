@@ -52,7 +52,7 @@ $myKml = Kml::createKml();
 $myKml->placemark('Cologne Cathedral',
         "The completion of Germany's largest cathedral 632 years after construction had begun …",
         '50.9413', '6.958');
-$myKml->header('cologne-cathedral');
+$myKml->headerfields('cologne-cathedral');
 print $myKml->getMarkup();
 ```
 
