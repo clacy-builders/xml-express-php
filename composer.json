@@ -8,8 +8,8 @@
 		"php": ">=5.4.0"
 	},
 	"autoload": {
-		"psr-4": [
+		"psr-4": {
 			"ML_Express\\": "src/"
-		]
+		}
 	}
 }
