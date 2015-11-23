@@ -156,7 +156,45 @@ class XmlAttributesTest extends \PHPUnit_Framework_TestCase
 								->setComplexAttrib('b', 'ipsum')
 								->setComplexAttrib('a', 'lorem'),
 						' a="lorem" b="ipsum"'
-				)
+				),
+				array(
+						self::attr(true)
+								->setAttrib('a', 'lorem')
+								->setBooleanAttrib('b'),
+						' a="lorem" b'
+				),
+				array(
+						self::attr(true)
+								->setAttrib('a', 'lorem')
+								->setBooleanAttrib('b', false),
+						' a="lorem"'
+				),
+				array(
+						self::attr(true)
+								->setAttrib('a', 'lorem')
+								->setBooleanAttrib('b', 'lorem', 'a'),
+						' a="lorem" b'
+				),
+				array(
+						self::attr(true)
+								->setAttrib('a', 'lorem')
+								->setBooleanAttrib('b', 'ipsum', 'a'),
+						' a="lorem"'
+				),
+				array(
+						self::attr(true)
+								->setAttrib('a', 'lorem')
+								->setBooleanAttrib('b', ['lorem', 'ipsum'], 'a'),
+						' a="lorem" b'
+				),
+				array(
+						self::attr(true)
+								->setAttrib('a', 'lorem')
+								->setBooleanAttrib('b', [true, 'ipsum'], 'a'),
+						' a="lorem"'
+				),
+
+
 		);
 	}
 

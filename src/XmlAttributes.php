@@ -84,6 +84,38 @@ class XmlAttributes
 	}
 
 	/**
+	 * Sets a boolean attribute by comparing a value with the value of another attribute.
+	 *
+	 * Helpful for attributes like <code>selected</code> in HTML.
+	 *
+	 * @param name string
+	 * <p>Name of the attribute.</p>
+	 *
+	 * @param value mixed [optional]
+	 * <p>One or more (array) values.
+	 * If is a boolean <code>setBooleanAttrib</code> behaves like <code>setAttrib</code>.</p>
+	 *
+	 * @param comparisonAttribute string [optional]
+	 * <p>Name of other attribute to compare with.
+	 * If is <code>null</code> <code>setBooleanAttrib</code> behaves like <code>setAttrib</code>.
+	 * </p>
+	 */
+
+	public function setBooleanAttrib($name, $value = true, $comparisonAttribute = null)
+	{
+		if (!is_bool($value) && !is_null($comparisonAttribute)) {
+			$compare = $this->getAttrib($comparisonAttribute);
+			if (is_array($value)) {
+				$value = in_array($compare, $value, true);
+			}
+			else {
+				$value = $value === $compare;
+			}
+		}
+		return $this->setAttrib($name, $value);
+	}
+
+	/**
 	 * Returns the value of the attribute.
 	 *
 	 * @param name string

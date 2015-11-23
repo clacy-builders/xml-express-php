@@ -304,6 +304,12 @@ class Xml
 		return $this;
 	}
 
+	public function booleanAttrib($name, $value = true, $comparisonAttribute = null)
+	{
+		$this->attributes->setBooleanAttrib($name, $value, $comparisonAttribute);
+		return $this;
+	}
+
 	/**
 	 * Generates the desired markup.
 	 *
@@ -515,29 +521,6 @@ class Xml
 	{
 		$class = get_class($this);
 		return new $class($name, $content, $this->getRoot(), $this->getAncestor());
-	}
-
-	/**
-	 * Helpful for boolean attributes depending on the value of another attribute
-	 * like <code>selected</code> in HTML.
-	 *
-	 * @param	mixed	$value				boolean or one or more (array) values to compare with.
-	 * @param	string	$attribute			Name of the attribute.
-	 * @param	string	$compareAttribute	Name of other attribute to compare with.
-	 * @return	Xml
-	 */
-	protected final function booleanAttrib($value, $attribute, $compareAttribute)
-	{
-		if (!is_bool($value)) {
-			$compare = $this->attributes->getAttrib($compareAttribute);
-			if (is_array($value)) {
-				$value = in_array($compare, $value);
-			}
-			else {
-				$value = $value == $compare;
-			}
-		}
-		return $this->attrib($attribute, $value);
 	}
 
 	private final function setAncestorOption($options, $key)

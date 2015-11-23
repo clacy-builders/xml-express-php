@@ -41,6 +41,6 @@ class Html extends Xml
 
 	public function setSelected($selected = true)
 	{
-		return $this->booleanAttrib($selected, 'selected', 'value');
+		return $this->booleanAttrib('selected', $selected, 'value');
 	}
 }
