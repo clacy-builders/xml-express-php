@@ -168,6 +168,34 @@ class XmlTest extends Express_TestCase
 						"<e>\n\t100\n\t200\n\t300\n</e>"
 				),
 
+				// appendLines()
+				array(
+						Xml::createSub('e')->appendLines("The quick brown fox jumps over the lazy
+								dog. The quick brown fox jumps over the
+								lazy dog. The quick brown fox jumps over
+								the lazy dog. The quick brown fox jumps
+								over the lazy dog."),
+						'<e>
+	The quick brown fox jumps over the lazy
+	dog. The quick brown fox jumps over the
+	lazy dog. The quick brown fox jumps over
+	the lazy dog. The quick brown fox jumps
+	over the lazy dog.
+</e>'
+				),
+				array(
+						Xml::createSub('e')
+							->appendLines("The quick brown fox jumps over the lazy dog.
+	The quick brown fox jumps over the lazy dog.
+		The quick brown fox jumps over the lazy dog.", false),
+						'<e>
+	The quick brown fox jumps over the lazy dog.
+		The quick brown fox jumps over the lazy dog.
+			The quick brown fox jumps over the lazy dog.
+</e>'
+				),
+
+
 				// comment()
 				array(
 						Xml::createSub()->append('e')->comment('content'),

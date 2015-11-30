@@ -253,23 +253,26 @@ class Xml
 		return $this;
 	}
 
-	public function appendLines($text)
+	public function appendLines($text, $ltrim = true)
 	{
 		if (is_string($text)) {
-			$options = $this->getOptions();
-			if ($options[self::OPTION_LINE_BREAK]) {
-				$text = str_replace("\t", $options[self::OPTION_INDENTATION], $text);
-				$text = explode($options[self::OPTION_LINE_BREAK], $text);
+			if ($this->getOption(self::OPTION_LINE_BREAK)) {
+				$text = str_replace(["\n\r", "\r"], "\n", $text);
+				$text = explode("\n", $text);
 			}
 			else {
+				$text = str_replace(["\n\r", "\r", "\n"], ' ', $text);
 				$text = str_replace("\t", '', $text);
-				$text = str_replace("\n", '', $text);
-				$text = str_replace("\r", '', $text);
-				$text = array($text);
+				return $this->appendText($text);
 			}
 		}
 		foreach ($text as $line) {
-			$this->appendText($line);
+			if ($ltrim === true)
+				$this->appendText(ltrim($line));
+			elseif ($ltrim === false)
+				$this->appendText($line);
+			else
+				$this->appendText(ltrim($line, $ltrim));
 		}
 		return $this;
 	}
