@@ -25,12 +25,16 @@ class Xml
 	const XML_NAMESPACE = null;
 	const DEFAULT_LINE_BREAK = self::LF;
 	const DEFAULT_INDENTATION = self::HT;
+	const DEFAULT_LTRIM = true;
 
 	/** This option defines the characters used for line breaks. */
 	const OPTION_LINE_BREAK = 'lineBreak';
 
 	/** This option defines the characters used for indentation. */
 	const OPTION_INDENTATION = 'indentation';
+
+	/** This option defines whether leading space should be removed or not. */
+	const OPTION_LTRIM = 'ltrim';
 
 	const XML_VERSION_1_0 = '1.0';
 	const XML_VERSION_1_1 = '1.1';
@@ -89,6 +93,7 @@ class Xml
 				$this->getAncestor()->options = [
 						self::OPTION_LINE_BREAK => static::DEFAULT_LINE_BREAK,
 						self::OPTION_INDENTATION => static::DEFAULT_INDENTATION,
+						self::OPTION_LTRIM => static::DEFAULT_LTRIM
 				];
 			}
 		}
@@ -166,7 +171,9 @@ class Xml
 	 */
 	public final function setOptions($options)
 	{
-		if (!isset($options[self::OPTION_LINE_BREAK]) && !isset($options[self::OPTION_INDENTATION]))
+		if (!isset($options[self::OPTION_LINE_BREAK])
+				&& !isset($options[self::OPTION_INDENTATION])
+				&& !isset($options[self::OPTION_LTRIM]))
 			return $this;
 		if (!$this->isAncestor()) {
 			$prevAncestor = $this->getAncestor();
@@ -174,10 +181,12 @@ class Xml
 			$this->options = [
 					self::OPTION_LINE_BREAK => $prevAncestor->options[self::OPTION_LINE_BREAK],
 					self::OPTION_INDENTATION => $prevAncestor->options[self::OPTION_INDENTATION],
+					self::OPTION_LTRIM => $prevAncestor->options[self::OPTION_LTRIM],
 			];
 		}
 		$this->setAncestorOption($options, self::OPTION_LINE_BREAK);
 		$this->setAncestorOption($options, self::OPTION_INDENTATION);
+		$this->setAncestorOption($options, self::OPTION_LTRIM);
 		return $this;
 	}
 
@@ -253,28 +262,9 @@ class Xml
 		return $this;
 	}
 
-	public function appendLines($text, $ltrim = true)
+	public function lineBr()
 	{
-		if (is_string($text)) {
-			if ($this->getOption(self::OPTION_LINE_BREAK)) {
-				$text = str_replace(["\n\r", "\r"], "\n", $text);
-				$text = explode("\n", $text);
-			}
-			else {
-				$text = str_replace(["\n\r", "\r", "\n"], ' ', $text);
-				$text = str_replace("\t", '', $text);
-				return $this->appendText($text);
-			}
-		}
-		foreach ($text as $line) {
-			if ($ltrim === true)
-				$this->appendText(ltrim($line));
-			elseif ($ltrim === false)
-				$this->appendText($line);
-			else
-				$this->appendText(ltrim($line, $ltrim));
-		}
-		return $this;
+		return $this->appendText('');
 	}
 
 	/**
@@ -365,11 +355,13 @@ class Xml
 				$xmlString .= $indent3 . self::CDATA_START . $line;
 			}
 			if ($this->content != null) {
-				$xmlString .= $indent2 . $this->content . $line;
+				$xmlString .= $indent2 . $this->prepareContent(
+						$this->content, $indent2, $line) . $line;
 			}
 			foreach ($this->children as $child) {
 				if (is_string($child)) {
-					$xmlString .= $indent2 . $child . $line;
+					$xmlString .= $indent2 . $this->prepareContent(
+							$child, $indent2, $line) . $line;
 				}
 				else {
 					$xmlString .= $child->getMarkup($indent2) . $line;
@@ -381,7 +373,7 @@ class Xml
 			$xmlString .= $indent3 . $this->closingTag();
 		}
 		else {
-			$xmlString .= $indent1 . $this->element($sgmlMode, $this->cdata);
+			$xmlString .= $indent1 . $this->element($sgmlMode, $indent1, $line, $this->cdata);
 		}
 		return $xmlString;
 	}
@@ -534,13 +526,13 @@ class Xml
 	}
 
 	/* element without Children */
-	private final function element($sgmlMode, $cdata = false)
+	private final function element($sgmlMode, $indent, $line, $cdata)
 	{
 		if ($this->content === null || (empty($this->content) && !$sgmlMode)) {
 			return $this->standaloneTag($sgmlMode);
 		}
 		else {
-			$content = $this->content;
+			$content = $this->prepareContent($this->content, $indent, $line);
 			if ($cdata) {
 				$content = self::CDATA_START . $content . self::CDATA_STOP;
 			}
@@ -569,5 +561,25 @@ class Xml
 		$attributes->setAttrib('version', static::XML_VERSION);
 		$attributes->setAttrib('encoding', static::CHARACTER_ENCODING);
 		return '<?xml' . $attributes->str() . ' ?>' . $this->getOption(self::OPTION_LINE_BREAK);
+	}
+
+	private final function prepareContent($content, $indent, $line)
+	{
+		if ($line) {
+			$content = str_replace(["\r\n", "\r"], "\n", $content);
+			$content = explode("\n", $content);
+		}
+		else {
+			$content = str_replace(["\n\r", "\r", "\n"], ' ', $content);
+			$content = str_replace("\t", '', $content);
+			return $content;
+		}
+		$ltrim = $this->getOption(self::OPTION_LTRIM);
+		if ($ltrim) {
+			foreach ($content as $i => $row) {
+				$content[$i] = ltrim($row);
+			}
+		}
+		return implode($line . $indent, $content);
 	}
 }

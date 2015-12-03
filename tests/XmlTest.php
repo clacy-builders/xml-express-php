@@ -45,7 +45,8 @@ class XmlTest extends Express_TestCase
 										Xml::OPTION_INDENTATION => '    '
 								))
 								->append('f')->append('e'),
-						"<e><f><e/></f></e>"),
+						"<e><f><e/></f></e>"
+				),
 				array(
 						Xml::createSub('e')
 								->setOptions(array(
@@ -53,7 +54,17 @@ class XmlTest extends Express_TestCase
 										Xml::OPTION_INDENTATION => '..',
 								))
 								->append('f')->append('e'),
-						"<e>\r..<f>\r....<e/>\r..</f>\r</e>"),
+						"<e>\r..<f>\r....<e/>\r..</f>\r</e>"
+				),
+
+				// setOption()
+				array(
+						Xml::createSub('e')
+								->setOption(XML::OPTION_LINE_BREAK, XML::CR)
+								->setOption(XML::OPTION_INDENTATION, '..')
+								->append('f')->append('e'),
+						"<e>\r..<f>\r....<e/>\r..</f>\r</e>"
+				),
 
 				// in_line
 				array(
@@ -168,34 +179,6 @@ class XmlTest extends Express_TestCase
 						"<e>\n\t100\n\t200\n\t300\n</e>"
 				),
 
-				// appendLines()
-				array(
-						Xml::createSub('e')->appendLines("The quick brown fox jumps over the lazy
-								dog. The quick brown fox jumps over the
-								lazy dog. The quick brown fox jumps over
-								the lazy dog. The quick brown fox jumps
-								over the lazy dog."),
-						'<e>
-	The quick brown fox jumps over the lazy
-	dog. The quick brown fox jumps over the
-	lazy dog. The quick brown fox jumps over
-	the lazy dog. The quick brown fox jumps
-	over the lazy dog.
-</e>'
-				),
-				array(
-						Xml::createSub('e')
-							->appendLines("The quick brown fox jumps over the lazy dog.
-	The quick brown fox jumps over the lazy dog.
-		The quick brown fox jumps over the lazy dog.", false),
-						'<e>
-	The quick brown fox jumps over the lazy dog.
-		The quick brown fox jumps over the lazy dog.
-			The quick brown fox jumps over the lazy dog.
-</e>'
-				),
-
-
 				// comment()
 				array(
 						Xml::createSub()->append('e')->comment('content'),
@@ -242,7 +225,60 @@ class XmlTest extends Express_TestCase
 						Html::createSub('option', 'PHP')->setValue('php')
 								->setSelected(['perl', 'python']),
 						'<option value="php">PHP</option>'
-				)
+				),
+
+				// prepareContent(): content with linebreaks
+				array(
+						Xml::createSub('e')->append('e', 'The quick brown fox
+								jumps over the lazy dog.'),
+						"<e>\n\t<e>The quick brown fox\n\tjumps over the lazy dog.</e>\n</e>"
+				),
+				array(
+						Xml::createSub('e')->append('e')->appendText('The quick brown fox
+								jumps over the lazy dog.'),
+						"<e>\n\t<e>\n\t\tThe quick brown fox\n\t\tjumps over the lazy dog.\n\t" .
+						"</e>\n</e>"
+				),
+				array(
+						Xml::createSub('e')->in_line()->append('e', 'The quick brown fox
+								jumps over the lazy dog.'),
+						"<e><e>The quick brown fox jumps over the lazy dog.</e></e>"
+				),
+				array(
+						Xml::createSub('e')->in_line()->append('e')->appendText('The quick brown fox
+								jumps over the lazy dog.'),
+						"<e><e>The quick brown fox jumps over the lazy dog.</e></e>"
+				),
+				array(
+						Xml::createSub('e')
+								->setOption(XML::OPTION_LTRIM, false)
+								->append('e', 'The quick brown fox jumps over the lazy
+	dog. The quick brown fox jumps over the
+		lazy dog. The quick brown fox jumps over
+			the lazy dog.'),
+						'<e>
+	<e>The quick brown fox jumps over the lazy
+		dog. The quick brown fox jumps over the
+			lazy dog. The quick brown fox jumps over
+				the lazy dog.</e>
+</e>'
+				),
+				array(
+						Xml::createSub('e')
+								->setOption(XML::OPTION_LTRIM, false)
+								->append('e')->appendText('The quick brown fox jumps over the lazy
+	dog. The quick brown fox jumps over the
+		lazy dog. The quick brown fox jumps over
+			the lazy dog.'),
+						'<e>
+	<e>
+		The quick brown fox jumps over the lazy
+			dog. The quick brown fox jumps over the
+				lazy dog. The quick brown fox jumps over
+					the lazy dog.
+	</e>
+</e>'
+				),
 		);
 	}
 }
