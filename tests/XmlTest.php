@@ -298,6 +298,12 @@ class XmlTest extends Express_TestCase
 						Xml::createSub('e')->setXmlns('http://www.w3.org/1999/xhtml', 'xhtml'),
 						'<e xmlns:xhtml="http://www.w3.org/1999/xhtml"/>'
 				),
+
+				// getParent()
+				array(
+						Xml::createSub('e')->in_line()->append('f')->append('g')->getParent(),
+						'<f><g/></f>', false
+				),
 		);
 	}
 }

@@ -52,6 +52,7 @@ class Xml
 	protected $attributes;
 	protected $options;
 	protected $children;
+	protected $parent;
 	protected $root;
 	protected $ancestor;
 	protected $sub = false;
@@ -80,7 +81,8 @@ class Xml
 			$name = null,
 			$content = null,
 			Xml $root = null,
-			Xml $ancestor = null)
+			Xml $ancestor = null,
+			Xml $parent = null)
 	{
 		if (isset($root)) {
 			$this->setRoot($root);
@@ -103,6 +105,7 @@ class Xml
 		$class = get_class($this->getRoot());
 		$this->attributes = new XmlAttributes($this);
 		$this->children = array();
+		$this->parent = $parent;
 	}
 
 	/**
@@ -143,6 +146,11 @@ class Xml
 	public final function getChild($index = 0)
 	{
 		return $this->children[$index];
+	}
+
+	public final function getParent()
+	{
+		return $this->parent;
 	}
 
 	/**
@@ -532,7 +540,7 @@ class Xml
 	protected final function newChild($name, $content = null)
 	{
 		$class = get_class($this);
-		return new $class($name, $content, $this->getRoot(), $this->getAncestor());
+		return new $class($name, $content, $this->getRoot(), $this->getAncestor(), $this);
 	}
 
 	private final function setAncestorOption($options, $key)
