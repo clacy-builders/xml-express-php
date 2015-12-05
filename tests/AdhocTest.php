@@ -13,8 +13,8 @@ class AdhocTest extends Express_TestCase
 	public function provider()
 	{
 		return array(
-				array(Html::createSub()->section()->setId('main'), '<section id="main">'),
-				array(Html::createSub()->section()->setId(null), '<section>'),
+				array(Html::createSub()->section()->setClass('main'), '<section class="main">'),
+				array(Html::createSub()->section()->setClass(null), '<section>'),
 				array(Html::createSub()->option()->setSelected(), '<option selected>'),
 				array(Html::createSub()->option()->setSelected(true), '<option selected>'),
 				array(Html::createSub()->option()->setSelected(false), '<option>'),

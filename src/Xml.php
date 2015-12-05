@@ -384,14 +384,31 @@ class Xml
 	 * @param	string	$lang	A BCP 47 language tag. For example 'en' or 'fr-CA'
 	 * @return	Xml
 	 */
-	public function lang($lang)
+	public function setLang($lang)
 	{
 		return $this->attrib('xml:lang', $lang);
 	}
 
-	public function setXmlns($xmlns, $identifier = null)
+	const SPACE_DEFAULT = 'default';
+	const SPACE_PRESERVE = 'preserve';
+
+	public function setSpace($space = self::SPACE_PRESERVE) {
+		return $this->attrib('xml:space', $space);
+	}
+
+	public function setBase($base)
 	{
-		return $this->attrib(empty($identifier) ? 'xmlns' : 'xmlns:' . $identifier, $xmls);
+		return $this->attrib('xml:base', $base);
+	}
+
+	public function setId($id)
+	{
+		return $this->attrib('xml:id', $id);
+	}
+
+	public function setXmlns($uri, $prefix = null)
+	{
+		return $this->attrib(empty($prefix) ? 'xmlns' : 'xmlns:' . $prefix, $uri);
 	}
 
 	/**

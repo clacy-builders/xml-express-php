@@ -279,6 +279,25 @@ class XmlTest extends Express_TestCase
 	</e>
 </e>'
 				),
+
+				// setLang(), setBase(), setId(), setSpace()
+				array(Xml::createSub('e')->setLang('en'), '<e xml:lang="en"/>'),
+				array(
+						Xml::createSub('e')->setBase('http://example.com'),
+						'<e xml:base="http://example.com"/>'
+				),
+				array(Xml::createSub('e')->setId('foo'), '<e xml:id="foo"/>'),
+				array(Xml::createSub('e')->setSpace(), '<e xml:space="preserve"/>'),
+
+				// setXmlns()
+				array(
+						Xml::createSub('e')->setXmlns('http://www.w3.org/1999/xhtml'),
+						'<e xmlns="http://www.w3.org/1999/xhtml"/>'
+				),
+				array(
+						Xml::createSub('e')->setXmlns('http://www.w3.org/1999/xhtml', 'xhtml'),
+						'<e xmlns:xhtml="http://www.w3.org/1999/xhtml"/>'
+				),
 		);
 	}
 }
