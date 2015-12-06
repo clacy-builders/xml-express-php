@@ -39,7 +39,7 @@ class XmlTest extends Express_TestCase
 
 				// setOptions()
 				array(
-						Xml::createSub('e')
+						Xml::c_('e')
 								->setOptions(array(
 										Xml::OPTION_LINE_BREAK => '',
 										Xml::OPTION_INDENTATION => '    '
@@ -48,7 +48,7 @@ class XmlTest extends Express_TestCase
 						"<e><f><e/></f></e>"
 				),
 				array(
-						Xml::createSub('e')
+						Xml::c_('e')
 								->setOptions(array(
 										Xml::OPTION_LINE_BREAK => "\r",
 										Xml::OPTION_INDENTATION => '..',
@@ -59,32 +59,41 @@ class XmlTest extends Express_TestCase
 
 				// setOption()
 				array(
-						Xml::createSub('e')
+						Xml::c_('e')
 								->setOption(XML::OPTION_LINE_BREAK, XML::CR)
 								->setOption(XML::OPTION_INDENTATION, '..')
 								->append('f')->append('e'),
 						"<e>\r..<f>\r....<e/>\r..</f>\r</e>"
 				),
 
-				// in_line
+				// inLine()
 				array(
-						Xml::createSub()
-								->append('e')->append('f', 'content')->in_line()
+						Xml::c_()
+								->append('e')
+								->append('f', 'content')->inLine()
 								->append('g', 'content'),
 						"<e>\n\t<f>content<g>content</g></f>\n</e>"
 				),
-
-				// createSub()
 				array(
-						Xml::createSub('e')->append('f', 'content'),
+						Xml::c_()
+								->inLine()
+								->append('e')
+								->append('f', "lorem ipsum\ndolor ")
+								->append('g', 'sit'),
+						"<e><f>lorem ipsum dolor <g>sit</g></f></e>"
+				),
+
+				// c_()
+				array(
+						Xml::c_('e')->append('f', 'content'),
 						"<e>\n\t<f>content</f>\n</e>"
 				),
 				array(
-						Xml::createSub()->append('e', 'content'),
+						Xml::c_()->append('e', 'content'),
 						"<e>content</e>"
 				),
 				array(
-						Xml::createSub()
+						Xml::c_()
 								->append('e', 'content')->getRoot()
 								->append('f', 'content'),
 						"<e>content</e>\n<f>content</f>"
@@ -92,19 +101,19 @@ class XmlTest extends Express_TestCase
 
 				// inject()
 				array(
-						Xml::createSub('e')->inject((new Xml)->append('f', 'content')->getRoot()),
+						Xml::c_('e')->inject((new Xml)->append('f', 'content')->getRoot()),
 						"<e>\n\t<f>content</f>\n</e>"
 				),
 				array(
-						Xml::createSub('e')->inject(Xml::createSub('f')),
+						Xml::c_('e')->inject(Xml::c_('f')),
 						"<e>\n\t<f/>\n</e>"
 				),
 				array(
-						Xml::createSub('e')->inject(Xml::createSub('f', 'content')),
+						Xml::c_('e')->inject(Xml::c_('f', 'content')),
 						"<e>\n\t<f>content</f>\n</e>"
 				),
 				array(
-						Xml::createSub('e')->inject((new Xml('f'))->append('g')->getRoot()),
+						Xml::c_('e')->inject((new Xml('f'))->append('g')->getRoot()),
 						"<e>\n\t<f>\n\t\t<g/>\n\t</f>\n</e>"
 				),
 				array(
@@ -115,38 +124,38 @@ class XmlTest extends Express_TestCase
 
 				// cdata()
 				array(
-						Xml::createSub()->append('e')->cdata(),
+						Xml::c_()->append('e')->cdata(),
 						"<e/>"
 				),
 				array(
-						Xml::createSub()->append('e', 'content')->cdata(),
+						Xml::c_()->append('e', 'content')->cdata(),
 						"<e><![CDATA[content]]></e>"
 				),
 				array(
-						Xml::createSub()->append('e')->cdata()->append('f', 'content'),
+						Xml::c_()->append('e')->cdata()->append('f', 'content'),
 						"<e>\n<![CDATA[\n\t<f>content</f>\n]]>\n</e>"
 				),
 
 				// append()
-				array(TestXml::createSub()->append(null), ''),
-				array(TestXml::createSub()->append(''), ''),
-				array(TestXml::createSub()->append(null, 'content'), ''),
-				array(TestXml::createSub()->append('', 'content'), ''),
-				array(TestXml::createSub()->append('e'), '<e/>'),
-				array(TestXml::createSub()->append('e', ''), '<e/>'),
-				array(TestXml::createSub()->append('e', 'content'), '<e>content</e>'),
-				array(TestSgml::createSub()->append(null), ''),
-				array(TestSgml::createSub()->append(''), ''),
-				array(TestSgml::createSub()->append(null, 'content'), ''),
-				array(TestSgml::createSub()->append('', 'content'), ''),
-				array(TestSgml::createSub()->append('e'), '<e>'),
-				array(TestSgml::createSub()->append('e', ''), '<e></e>'),
-				array(TestSgml::createSub()->append('e', 'content'), '<e>content</e>'),
+				array(TestXml::c_()->append(null), ''),
+				array(TestXml::c_()->append(''), ''),
+				array(TestXml::c_()->append(null, 'content'), ''),
+				array(TestXml::c_()->append('', 'content'), ''),
+				array(TestXml::c_()->append('e'), '<e/>'),
+				array(TestXml::c_()->append('e', ''), '<e/>'),
+				array(TestXml::c_()->append('e', 'content'), '<e>content</e>'),
+				array(TestSgml::c_()->append(null), ''),
+				array(TestSgml::c_()->append(''), ''),
+				array(TestSgml::c_()->append(null, 'content'), ''),
+				array(TestSgml::c_()->append('', 'content'), ''),
+				array(TestSgml::c_()->append('e'), '<e>'),
+				array(TestSgml::c_()->append('e', ''), '<e></e>'),
+				array(TestSgml::c_()->append('e', 'content'), '<e>content</e>'),
 
 				// append to parent without name
 				array(
 						function () {
-							$xml = Xml::createSub()->append('e')->append('f')->append(null);
+							$xml = Xml::c_()->append('e')->append('f')->append(null);
 							$xml->append('g1');
 							$xml->append('g2', 'content');
 							return $xml;
@@ -155,24 +164,24 @@ class XmlTest extends Express_TestCase
 				),
 				array(
 						function () {
-							$xml = Xml::createSub();
+							$xml = Xml::c_();
 							$xml->append('g1', 'content');
 							$xml->append('g2');
-							return Xml::createSub()->append('e')->append('f')->inject($xml);
+							return Xml::c_()->append('e')->append('f')->inject($xml);
 						},
 						"<e>\n\t<f>\n\t\t<g1>content</g1>\n\t\t<g2/>\n\t</f>\n</e>"
 				),
 
 				// appendText()
 				array(
-						Xml::createSub()->append('e')
+						Xml::c_()->append('e')
 								->appendText('Lorem')
 								->appendText('Ipsum')
 								->appendText('Dolor'),
 						"<e>\n\tLorem\n\tIpsum\n\tDolor\n</e>"
 				),
 				array(
-						Xml::createSub()->append('e', '')
+						Xml::c_()->append('e', '')
 								->appendText(100)
 								->appendText(200)
 								->appendText(300),
@@ -181,7 +190,7 @@ class XmlTest extends Express_TestCase
 
 				// comment()
 				array(
-						Xml::createSub()->append('e')->comment('content'),
+						Xml::c_()->append('e')->comment('content'),
 						"<e>\n\t<!-- content -->\n</e>"
 				),
 
@@ -201,56 +210,56 @@ class XmlTest extends Express_TestCase
 
 				// booleanAttrib()
 				array(
-						Html::createSub('option', 'PHP')->setValue('php')->setSelected(),
+						Html::c_('option', 'PHP')->setValue('php')->setSelected(),
 						'<option value="php" selected>PHP</option>'
 				),
 				array(
-						Html::createSub('option', 'PHP')->setValue('php')->setSelected('php'),
+						Html::c_('option', 'PHP')->setValue('php')->setSelected('php'),
 						'<option value="php" selected>PHP</option>'
 				),
 				array(
-						Html::createSub('option', 'PHP')->setValue('php')
+						Html::c_('option', 'PHP')->setValue('php')
 								->setSelected(['php', 'python']),
 						'<option value="php" selected>PHP</option>'
 				),
 				array(
-						Html::createSub('option', 'PHP')->setValue('php')->setSelected(false),
+						Html::c_('option', 'PHP')->setValue('php')->setSelected(false),
 						'<option value="php">PHP</option>'
 				),
 				array(
-						Html::createSub('option', 'PHP')->setValue('php')->setSelected('python'),
+						Html::c_('option', 'PHP')->setValue('php')->setSelected('python'),
 						'<option value="php">PHP</option>'
 				),
 				array(
-						Html::createSub('option', 'PHP')->setValue('php')
+						Html::c_('option', 'PHP')->setValue('php')
 								->setSelected(['perl', 'python']),
 						'<option value="php">PHP</option>'
 				),
 
 				// prepareContent(): content with linebreaks
 				array(
-						Xml::createSub('e')->append('e', 'The quick brown fox
+						Xml::c_('e')->append('e', 'The quick brown fox
 								jumps over the lazy dog.'),
 						"<e>\n\t<e>The quick brown fox\n\tjumps over the lazy dog.</e>\n</e>"
 				),
 				array(
-						Xml::createSub('e')->append('e')->appendText('The quick brown fox
+						Xml::c_('e')->append('e')->appendText('The quick brown fox
 								jumps over the lazy dog.'),
 						"<e>\n\t<e>\n\t\tThe quick brown fox\n\t\tjumps over the lazy dog.\n\t" .
 						"</e>\n</e>"
 				),
 				array(
-						Xml::createSub('e')->in_line()->append('e', 'The quick brown fox
+						Xml::c_('e')->l_()->append('e', 'The quick brown fox
 								jumps over the lazy dog.'),
 						"<e><e>The quick brown fox jumps over the lazy dog.</e></e>"
 				),
 				array(
-						Xml::createSub('e')->in_line()->append('e')->appendText('The quick brown fox
+						Xml::c_('e')->l_()->append('e')->appendText('The quick brown fox
 								jumps over the lazy dog.'),
 						"<e><e>The quick brown fox jumps over the lazy dog.</e></e>"
 				),
 				array(
-						Xml::createSub('e')
+						Xml::c_('e')
 								->setOption(XML::OPTION_LTRIM, false)
 								->append('e', 'The quick brown fox jumps over the lazy
 	dog. The quick brown fox jumps over the
@@ -264,7 +273,7 @@ class XmlTest extends Express_TestCase
 </e>'
 				),
 				array(
-						Xml::createSub('e')
+						Xml::c_('e')
 								->setOption(XML::OPTION_LTRIM, false)
 								->append('e')->appendText('The quick brown fox jumps over the lazy
 	dog. The quick brown fox jumps over the
@@ -281,27 +290,27 @@ class XmlTest extends Express_TestCase
 				),
 
 				// setLang(), setBase(), setId(), setSpace()
-				array(Xml::createSub('e')->setLang('en'), '<e xml:lang="en"/>'),
+				array(Xml::c_('e')->setLang('en'), '<e xml:lang="en"/>'),
 				array(
-						Xml::createSub('e')->setBase('http://example.com'),
+						Xml::c_('e')->setBase('http://example.com'),
 						'<e xml:base="http://example.com"/>'
 				),
-				array(Xml::createSub('e')->setId('foo'), '<e xml:id="foo"/>'),
-				array(Xml::createSub('e')->setSpace(), '<e xml:space="preserve"/>'),
+				array(Xml::c_('e')->setId('foo'), '<e xml:id="foo"/>'),
+				array(Xml::c_('e')->setSpace(), '<e xml:space="preserve"/>'),
 
 				// setXmlns()
 				array(
-						Xml::createSub('e')->setXmlns('http://www.w3.org/1999/xhtml'),
+						Xml::c_('e')->setXmlns('http://www.w3.org/1999/xhtml'),
 						'<e xmlns="http://www.w3.org/1999/xhtml"/>'
 				),
 				array(
-						Xml::createSub('e')->setXmlns('http://www.w3.org/1999/xhtml', 'xhtml'),
+						Xml::c_('e')->setXmlns('http://www.w3.org/1999/xhtml', 'xhtml'),
 						'<e xmlns:xhtml="http://www.w3.org/1999/xhtml"/>'
 				),
 
 				// getParent()
 				array(
-						Xml::createSub('e')->in_line()->append('f')->append('g')->getParent(),
+						Xml::c_('e')->l_()->append('f')->append('g')->getParent(),
 						'<f><g/></f>', false
 				),
 		);

@@ -189,7 +189,7 @@ class Xml
 			$this->options = [
 					self::OPTION_LINE_BREAK => $prevAncestor->options[self::OPTION_LINE_BREAK],
 					self::OPTION_INDENTATION => $prevAncestor->options[self::OPTION_INDENTATION],
-					self::OPTION_LTRIM => $prevAncestor->options[self::OPTION_LTRIM],
+					self::OPTION_LTRIM => $prevAncestor->options[self::OPTION_LTRIM]
 			];
 		}
 		$this->setAncestorOption($options, self::OPTION_LINE_BREAK);
@@ -216,7 +216,7 @@ class Xml
 	 *
 	 * @return	Xml
 	 */
-	public final function in_line()
+	public final function inLine()
 	{
 		return $this->setOption(self::OPTION_LINE_BREAK, '');
 	}
@@ -264,15 +264,10 @@ class Xml
 	 * @param	string	$text
 	 * @return	Xml
 	 */
-	public final function appendText($text)
+	public final function appendText($text = '')
 	{
 		$this->appendChild((string) $text);
 		return $this;
-	}
-
-	public function lineBr()
-	{
-		return $this->appendText('');
 	}
 
 	/**
@@ -349,6 +344,7 @@ class Xml
 			$indent2 = $indentation . $tab;
 			$indent3 = $indentation;
 		}
+
 		if ($this->isRoot() && !$this->sub) {
 			if ($xmlDeclaration && !$sgmlMode) {
 				$xmlString .= $this->xmlDecl();
@@ -417,6 +413,31 @@ class Xml
 	public function setXmlns($uri, $prefix = null)
 	{
 		return $this->attrib(empty($prefix) ? 'xmlns' : 'xmlns:' . $prefix, $uri);
+	}
+
+	public function p_()
+	{
+		return $this->getParent();
+	}
+
+	public function l_()
+	{
+		return $this->inLine();
+	}
+
+	public function t_($text = '')
+	{
+		return $this->appendText($text);
+	}
+
+	public function m_($indentation = '')
+	{
+		return $this->getMarkup($indentation);
+	}
+
+	public static function c_($name = '', $content = null)
+	{
+		return static::createSub($name, $content);
 	}
 
 	/**
@@ -595,7 +616,7 @@ class Xml
 			$content = explode("\n", $content);
 		}
 		else {
-			$content = str_replace(["\n\r", "\r", "\n"], ' ', $content);
+			$content = str_replace(["\r\n", "\r", "\n"], ' ', $content);
 			$content = str_replace("\t", '', $content);
 			return $content;
 		}
