@@ -8,8 +8,9 @@ Add the following to your project's `composer.json` file:
 
 ```json
 {
+    "minimum-stability": "dev",
     "require": {
-        "ml-express/xml": ">=0.6"
+        "ml-express/xml": "dev-master@dev"
     }
 }
 ```

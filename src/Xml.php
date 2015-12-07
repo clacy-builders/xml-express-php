@@ -420,6 +420,11 @@ class Xml
 		return $this->getParent();
 	}
 
+	public function r_()
+	{
+		return $this->getRoot();
+	}
+
 	public function l_()
 	{
 		return $this->inLine();
