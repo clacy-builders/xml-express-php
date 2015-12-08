@@ -148,8 +148,10 @@ class Xml
 		return $this->children[$index];
 	}
 
-	public final function getParent()
+	public final function getParent($n = null)
 	{
+		if ($n > 1)
+			return $this->parent->getParent(--$n);
 		return $this->parent;
 	}
 
@@ -415,9 +417,9 @@ class Xml
 		return $this->attrib(empty($prefix) ? 'xmlns' : 'xmlns:' . $prefix, $uri);
 	}
 
-	public function p_()
+	public function p_($n = null)
 	{
-		return $this->getParent();
+		return $this->getParent($n);
 	}
 
 	public function r_()
@@ -443,6 +445,16 @@ class Xml
 	public static function c_($name = '', $content = null)
 	{
 		return static::createSub($name, $content);
+	}
+
+	public static function cl_($name = '', $content = null)
+	{
+		return static::c_($name, $content)->l_();
+	}
+
+	public function rm_($indentation = '')
+	{
+		return $this->r_()->m_($indentation);
 	}
 
 	/**
