@@ -447,14 +447,24 @@ class Xml
 		return static::createSub($name, $content);
 	}
 
-	public static function cl_($name = '', $content = null)
+	public function rl_()
 	{
-		return static::c_($name, $content)->l_();
+		return $this->r_()->l_();
 	}
 
-	public function rm_($indentation = '')
+	public function pt_($text)
 	{
-		return $this->r_()->m_($indentation);
+		return $this->p_()->t_($text);
+	}
+
+	public function plt_($text)
+	{
+		return $this->p_()->l_()->t_($text);
+	}
+
+	public function __toString()
+	{
+		return $this->getMarkup();
 	}
 
 	/**
