@@ -60,8 +60,8 @@ class XmlTest extends Express_TestCase
 				// setOption()
 				array(
 						Xml::c_('e')
-								->setOption(XML::OPTION_LINE_BREAK, XML::CR)
-								->setOption(XML::OPTION_INDENTATION, '..')
+								->setOption(Xml::OPTION_LINE_BREAK, Xml::CR)
+								->setOption(Xml::OPTION_INDENTATION, '..')
 								->append('f')->append('e'),
 						"<e>\r..<f>\r....<e/>\r..</f>\r</e>"
 				),
@@ -260,7 +260,7 @@ class XmlTest extends Express_TestCase
 				),
 				array(
 						Xml::c_('e')
-								->setOption(XML::OPTION_LTRIM, false)
+								->setOption(Xml::OPTION_TEXT_MODE, Xml::TEXT_MODE_NO_LTRIM)
 								->append('e', 'The quick brown fox jumps over the lazy
 	dog. The quick brown fox jumps over the
 		lazy dog. The quick brown fox jumps over
@@ -274,7 +274,7 @@ class XmlTest extends Express_TestCase
 				),
 				array(
 						Xml::c_('e')
-								->setOption(XML::OPTION_LTRIM, false)
+								->setOption(Xml::OPTION_TEXT_MODE, Xml::TEXT_MODE_NO_LTRIM)
 								->append('e')->appendText('The quick brown fox jumps over the lazy
 	dog. The quick brown fox jumps over the
 		lazy dog. The quick brown fox jumps over

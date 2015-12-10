@@ -26,6 +26,7 @@ class Xml
 	const DEFAULT_LINE_BREAK = self::LF;
 	const DEFAULT_INDENTATION = self::HT;
 	const DEFAULT_LTRIM = true;
+	const DEFAULT_TEXT_MODE = self::TEXT_MODE_DEFAULT;
 
 	/** This option defines the characters used for line breaks. */
 	const OPTION_LINE_BREAK = 'lineBreak';
@@ -33,8 +34,10 @@ class Xml
 	/** This option defines the characters used for indentation. */
 	const OPTION_INDENTATION = 'indentation';
 
-	/** This option defines whether leading space should be removed or not. */
-	const OPTION_LTRIM = 'ltrim';
+	const OPTION_TEXT_MODE = 'textMode';
+	const TEXT_MODE_DEFAULT = 0;
+	const TEXT_MODE_PREPEND = 1;
+	const TEXT_MODE_NO_LTRIM = 2;
 
 	const XML_VERSION_1_0 = '1.0';
 	const XML_VERSION_1_1 = '1.1';
@@ -95,7 +98,7 @@ class Xml
 				$this->getAncestor()->options = [
 						self::OPTION_LINE_BREAK => static::DEFAULT_LINE_BREAK,
 						self::OPTION_INDENTATION => static::DEFAULT_INDENTATION,
-						self::OPTION_LTRIM => static::DEFAULT_LTRIM
+						self::OPTION_TEXT_MODE => static::DEFAULT_TEXT_MODE
 				];
 			}
 		}
@@ -173,6 +176,7 @@ class Xml
 	 * <ul>
 	 * <li>OPTION_LINE_BREAK
 	 * <li>OPTION_INDENTATION
+	 * <li>OPTION_TEXT_MODE
 	 * </ul>
 	 *
 	 * @param	array	$options	Assotiative array.
@@ -183,7 +187,7 @@ class Xml
 	{
 		if (!isset($options[self::OPTION_LINE_BREAK])
 				&& !isset($options[self::OPTION_INDENTATION])
-				&& !isset($options[self::OPTION_LTRIM]))
+				&& !isset($options[self::OPTION_TEXT_MODE]))
 			return $this;
 		if (!$this->isAncestor()) {
 			$prevAncestor = $this->getAncestor();
@@ -191,12 +195,12 @@ class Xml
 			$this->options = [
 					self::OPTION_LINE_BREAK => $prevAncestor->options[self::OPTION_LINE_BREAK],
 					self::OPTION_INDENTATION => $prevAncestor->options[self::OPTION_INDENTATION],
-					self::OPTION_LTRIM => $prevAncestor->options[self::OPTION_LTRIM]
+					self::OPTION_TEXT_MODE => $prevAncestor->options[self::OPTION_TEXT_MODE]
 			];
 		}
 		$this->setAncestorOption($options, self::OPTION_LINE_BREAK);
 		$this->setAncestorOption($options, self::OPTION_INDENTATION);
-		$this->setAncestorOption($options, self::OPTION_LTRIM);
+		$this->setAncestorOption($options, self::OPTION_TEXT_MODE);
 		return $this;
 	}
 
@@ -638,6 +642,8 @@ class Xml
 
 	private final function prepareContent($content, $indent, $line)
 	{
+		if ($this->getOption(self::OPTION_TEXT_MODE) == self::TEXT_MODE_PREPEND)
+			return $content;
 		if ($line) {
 			$content = str_replace(["\r\n", "\r"], "\n", $content);
 			$content = explode("\n", $content);
@@ -647,8 +653,7 @@ class Xml
 			$content = str_replace("\t", '', $content);
 			return $content;
 		}
-		$ltrim = $this->getOption(self::OPTION_LTRIM);
-		if ($ltrim) {
+		if ($this->getOption(self::OPTION_TEXT_MODE) != self::TEXT_MODE_NO_LTRIM) {
 			foreach ($content as $i => $row) {
 				$content[$i] = ltrim($row);
 			}
