@@ -451,9 +451,9 @@ class Xml
 		return static::createSub($name, $content);
 	}
 
-	public function rl_()
+	public function cl_($name = '', $content = null)
 	{
-		return $this->r_()->l_();
+		return $this->c_($name, $content)->l_();
 	}
 
 	public function pt_($text)
@@ -468,7 +468,7 @@ class Xml
 
 	public function __toString()
 	{
-		return $this->getMarkup();
+		return $this->getRoot()->getMarkup();
 	}
 
 	/**

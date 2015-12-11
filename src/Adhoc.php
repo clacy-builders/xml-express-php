@@ -51,6 +51,6 @@ trait Adhoc
 	public static function __callstatic($method, $arguments)
 	{
 		$content = count($arguments) ? $arguments[0] : null;
-		return self::createSub($method)->append($method, $content)->getMarkup();
+		return self::createSub($method, $content);
 	}
 }

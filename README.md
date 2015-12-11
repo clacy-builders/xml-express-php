@@ -1,4 +1,4 @@
-# XML Express PHP
+# XML Express for PHP
 
 ## Installation
 
@@ -14,6 +14,7 @@ Add the following to your project's `composer.json` file:
     }
 }
 ```
+
 
 Run `composer install` or `composer update`.
 
@@ -51,26 +52,29 @@ class Kml extends Xml
 
 $myKml = Kml::createKml();
 $myKml->placemark('Cologne Cathedral',
-        "The completion of Germany's largest cathedral 632 years after construction had begun …",
+        'Cologne Cathedral is a Roman Catholic cathedral in Cologne, Germany.',
         '50.9413', '6.958');
 $myKml->headerfields('cologne-cathedral');
 print $myKml->getMarkup();
 ```
 
-This is the generated markup:
+The generated markup:
 
-```xml
+```html
 <?xml version="1.0" encoding="UTF-8" ?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
     <Placemark>
         <name>Cologne Cathedral</name>
-        <description>The completion of Germany's largest cathedral 632 years after construction had begun …</description>
+        <description>Cologne Cathedral is a Roman Catholic cathedral in Cologne, Germany.</description>
         <Point>
             <coordinates>50.9413,6.958,0</coordinates>
         </Point>
     </Placemark>
 </kml>
 ```
+
+
+### The `Adhoc` trait
 
 `Adhoc` allows you to use any method name not previously defined to add XML elements or attributes.
 
@@ -96,19 +100,29 @@ class Html extends Xml
     }
 }
 
-$html = Html::createHtml();
-$html->body()->p('Lorem ' . Html::em('ipsum') . ' dolor' . Html::br());
+$html = Html::createHtml('en');
+$body = $html->body();
+$article = $body->article();
+$article->h1('Scripting languages');
+$article->p(Html::abbr('PHP')->setTitle('PHP: Hypertext Preprocessor') . ' is a
+        server-side scripting language designed for web development but also used
+        as a general-purpose programming language.');
 
 print $html->getMarkup();
 ```
 
-This is the generated markup:
+The generated markup:
 
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <body>
-        <p>Lorem <em>ipsum</em> dolor<br></p>
+        <article>
+            <h1>Scripting languages</h1>
+            <p><abbr title="PHP: Hypertext Preprocessor">PHP</abbr> is a
+            server-side scripting language designed for web development but also used
+            as a general-purpose programming language.</p>
+        </article>
     </body>
 </html>
 ```

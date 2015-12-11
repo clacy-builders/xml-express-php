@@ -322,9 +322,9 @@ class XmlTest extends Express_TestCase
 						'<e><f><g><h/></g></f></e>', false
 				),
 
-				// rl_(), r_(), getRoot()
+				// r_(), getRoot()
 				array(
-						Xml::c_('e')->append('f')->append('g')->append('h')->rl_(),
+						Xml::c_('e')->l_()->append('f')->append('g')->append('h')->r_(),
 						'<e><f><g><h/></g></f></e>'
 				),
 
