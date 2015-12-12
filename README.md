@@ -18,6 +18,27 @@ Add the following to your project's `composer.json` file:
 
 Run `composer install` or `composer update`.
 
+### Without Composer
+
+ 1. Download the [ZIP file](https://github.com/ml-express/xml-express-php/archive/master.zip).
+ 2. Inside your project directory create the directories `/vendor/ml-express/xml`.
+ 3. From the folder `xml-express-php-master` inside the ZIP file copy the files it contains
+    into the previously created `xml` folder.
+
+Replace
+```php
+require_once 'vendor/autoload.php';
+```
+
+with
+```php
+require_once 'vendor/ml-express/xml/allIncl.php';
+```
+
+
+
+
+
 ## Basic Usage
 
 ```php
@@ -95,8 +116,8 @@ class Html extends Xml
     public static function createHtml($lang = null, $manifest = null)
     {
         return (new Html('html'))
-                ->attrib('lang', $lang)
-                ->attrib('manifest', $manifest);
+                ->setLang($lang)
+                ->setManifest($manifest);
     }
 }
 
@@ -115,7 +136,7 @@ The generated markup:
 
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html xml:lang="en">
     <body>
         <article>
             <h1>Scripting languages</h1>

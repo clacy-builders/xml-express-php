@@ -441,29 +441,24 @@ class Xml
 		return $this->appendText($text);
 	}
 
-	public function m_($indentation = '')
-	{
-		return $this->getMarkup($indentation);
-	}
-
 	public static function c_($name = '', $content = null)
 	{
 		return static::createSub($name, $content);
 	}
 
-	public function cl_($name = '', $content = null)
+	public static function cl_($name = '', $content = null)
 	{
-		return $this->c_($name, $content)->l_();
+		return static::createSub($name, $content)->inLine();
 	}
 
 	public function pt_($text)
 	{
-		return $this->p_()->t_($text);
+		return $this->getParent()->appendText($text);
 	}
 
 	public function plt_($text)
 	{
-		return $this->p_()->l_()->t_($text);
+		return $this->getParent()->inLine()->appendText($text);
 	}
 
 	public function __toString()
