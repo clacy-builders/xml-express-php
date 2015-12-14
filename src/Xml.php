@@ -248,6 +248,13 @@ class Xml
 	 */
 	public final function append($name, $content = null)
 	{
+		if (is_array($content)) {
+			$first = $this->append($name, $content[0]);
+			for ($i = 1; $i < count($content); $i++) {
+				$this->append($name, $content[$i]);
+			}
+			return $first;
+		}
 		return $this->appendChild($this->newChild($name, $content));
 	}
 

@@ -15,7 +15,6 @@ Add the following to your project's `composer.json` file:
 }
 ```
 
-
 Run `composer install` or `composer update`.
 
 ### Without Composer
@@ -34,10 +33,6 @@ with
 ```php
 require_once 'vendor/ml-express/xml/allIncl.php';
 ```
-
-
-
-
 
 ## Basic Usage
 
@@ -93,7 +88,6 @@ The generated markup:
     </Placemark>
 </kml>
 ```
-
 
 ### The `Adhoc` trait
 

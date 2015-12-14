@@ -151,6 +151,11 @@ class XmlTest extends Express_TestCase
 				array(TestSgml::c_()->append('e'), '<e>'),
 				array(TestSgml::c_()->append('e', ''), '<e></e>'),
 				array(TestSgml::c_()->append('e', 'content'), '<e>content</e>'),
+				array(
+						TestXml::c_()->append('e', ['lorem', 'ipsum', 'dolor'])
+								->attrib('foo', 'bar'),
+						"<e foo=\"bar\">lorem</e>\n<e>ipsum</e>\n<e>dolor</e>"
+				),
 
 				// append to parent without name
 				array(
