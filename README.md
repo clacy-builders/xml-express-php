@@ -5,7 +5,6 @@
 XML Express for PHP requires PHP 5.4 or newer.
 
 Add the following to your project's `composer.json` file:
-
 ```json
 {
     "minimum-stability": "dev",
@@ -14,6 +13,7 @@ Add the following to your project's `composer.json` file:
     }
 }
 ```
+
 
 Run `composer install` or `composer update`.
 
@@ -34,6 +34,7 @@ with
 require_once 'vendor/ml-express/xml/allIncl.php';
 ```
 
+
 ## Basic Usage
 
 ```php
@@ -47,12 +48,11 @@ class Kml extends Xml
     const MIME_TYPE = 'application/vnd.google-earth.kml+xml';
     const FILENAME_EXTENSION = 'kml';
     const XML_NAMESPACE = 'http://www.opengis.net/kml/2.2';
+    const ROOT_ELEMENT = 'kml';
 
     public static function createKml()
     {
-        $kml = new Kml('kml');
-        $kml->attrib('xmlns', self::XML_NAMESPACE);
-        return $kml;
+        return static::createRoot();
     }
 
     public function placemark($name, $description, $longitude, $latitude, $altitude = 0)
@@ -89,6 +89,7 @@ The generated markup:
 </kml>
 ```
 
+
 ### The `Adhoc` trait
 
 `Adhoc` allows you to use any method name not previously defined to add XML elements or attributes.
@@ -104,13 +105,15 @@ class Html extends Xml
 {
     use Adhoc;
 
+    const XML_DECLARATION = false;
     const DOCTYPE = '<!DOCTYPE html>';
     const SGML_MODE = true;
+    const ROOT_ELEMENT = 'html';
 
     public static function createHtml($lang = null, $manifest = null)
     {
-        return (new Html('html'))
-                ->setLang($lang)
+        return static::createRoot()
+                ->attrib('lang', $lang)
                 ->setManifest($manifest);
     }
 }
@@ -130,7 +133,7 @@ The generated markup:
 
 ```html
 <!DOCTYPE html>
-<html xml:lang="en">
+<html lang="en">
     <body>
         <article>
             <h1>Scripting languages</h1>
