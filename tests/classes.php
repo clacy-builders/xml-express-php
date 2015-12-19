@@ -9,6 +9,7 @@ class TestXml extends Xml
 {
 	const MIME_TYPE = 'application/vnd.ml-express.tml+xml';
 	const FILENAME_EXTENSION = 'tml';
+	const ROOT_ELEMENT = 'tml';
 	const XML_VERSION = '1.1';
 	const CHARACTER_ENCODING = 'ISO-8859-15';
 }
@@ -16,6 +17,7 @@ class TestXml extends Xml
 class TestSgml extends TestXml
 {
 	const SGML_MODE = true;
+	const XML_DECLARATION = false;
 	const DOCTYPE = '<!DOCTYPE tml>';
 }
 

@@ -268,6 +268,7 @@ class Xml
 	{
 		$element->setAncestor($this->getAncestor());
 		$element->setRoot($this->getRoot());
+		$element->parent = $this;
 		return $this->appendChild($element);
 	}
 

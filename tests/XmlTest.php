@@ -254,12 +254,12 @@ class XmlTest extends Express_TestCase
 						"</e>\n</e>"
 				),
 				array(
-						Xml::c_('e')->l_()->append('e', 'The quick brown fox
+						Xml::cl_('e')->append('e', 'The quick brown fox
 								jumps over the lazy dog.'),
 						"<e><e>The quick brown fox jumps over the lazy dog.</e></e>"
 				),
 				array(
-						Xml::c_('e')->l_()->append('e')->appendText('The quick brown fox
+						Xml::cl_('e')->append('e')->appendText('The quick brown fox
 								jumps over the lazy dog.'),
 						"<e><e>The quick brown fox jumps over the lazy dog.</e></e>"
 				),
@@ -315,21 +315,25 @@ class XmlTest extends Express_TestCase
 
 				// p_(), getParent()
 				array(
-						Xml::c_('e')->l_()->append('f')->append('g')->p_(),
+						Xml::cl_('e')->append('f')->append('g')->p_(),
 						'<f><g/></f>', false
 				),
 				array(
-						Xml::c_('e')->l_()->append('f')->append('g')->append('h')->p_(2),
+						Xml::cl_('e')->append('f')->append('g')->append('h')->p_(2),
 						'<f><g><h/></g></f>', false
 				),
 				array(
-						Xml::c_('e')->l_()->append('f')->append('g')->append('h')->p_(3),
+						Xml::cl_('e')->append('f')->append('g')->append('h')->p_(3),
+						'<e><f><g><h/></g></f></e>', false
+				),
+				array(
+						Xml::cl_('e')->append('f')->inject(Xml::c_('g')->append('h')->p_())->p_(2),
 						'<e><f><g><h/></g></f></e>', false
 				),
 
 				// r_(), getRoot()
 				array(
-						Xml::c_('e')->l_()->append('f')->append('g')->append('h')->r_(),
+						Xml::cl_('e')->append('f')->append('g')->append('h')->r_(),
 						'<e><f><g><h/></g></f></e>'
 				),
 
