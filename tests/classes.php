@@ -15,8 +15,6 @@ class TestXml extends Xml
 
 class TestSgml extends TestXml
 {
-	//use ClassAttribute;
-
 	const SGML_MODE = true;
 	const DOCTYPE = '<!DOCTYPE tml>';
 }
@@ -36,11 +34,33 @@ class Html extends Xml
 
 	public static function createHtml($lang = null, $manifest = null)
 	{
-		return (new AdhocHtml('html'))->attrib($lang)->attrib($manifest);
+		return (new Html('html'))->attrib($lang)->attrib($manifest);
 	}
 
 	public function setSelected($selected = true)
 	{
 		return $this->booleanAttrib('selected', $selected, 'value');
+	}
+}
+
+class Foo extends Xml
+{
+	const XML_NAMESPACE = 'https://example.com/foo/1.0';
+	const ROOT_ELEMENT = 'foo';
+
+	public static function createFoo()
+	{
+		return (new Foo(self::ROOT_ELEMENT));
+	}
+}
+
+class Bar extends Xml
+{
+	const XML_NAMESPACE = 'https://example.com/bar/1.0';
+	const ROOT_ELEMENT = 'bar';
+
+	public static function createBar()
+	{
+		return (new Bar(self::ROOT_ELEMENT));
 	}
 }

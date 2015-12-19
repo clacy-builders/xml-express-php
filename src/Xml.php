@@ -359,7 +359,7 @@ class Xml
 		}
 
 		if ($this->isRoot() && !$this->sub) {
-			if ($xmlDeclaration && !$sgmlMode) {
+			if ($xmlDeclaration) {
 				$xmlString .= $this->xmlDecl();
 			}
 			if ($doctype != null) {
@@ -595,6 +595,14 @@ class Xml
 	{
 		$class = get_class($this);
 		return new $class($name, $content, $this->getRoot(), $this->getAncestor(), $this);
+	}
+
+	protected static final function createRoot()
+	{
+		$class = get_called_class();
+		$element = new $class(static::ROOT_ELEMENT, '');
+		$element->setXmlns(static::XML_NAMESPACE);
+		return $element;
 	}
 
 	private final function setAncestorOption($options, $key)
