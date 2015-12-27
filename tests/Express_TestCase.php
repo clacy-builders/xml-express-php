@@ -12,15 +12,12 @@ class Express_TestCase extends \PHPUnit_Framework_TestCase
 	 */
 	public function test($xml, $expectedMarkup, $root = true)
 	{
-		if (is_string($xml)) {
-			$markup = $xml;
+		if (is_callable($xml)) {
+			$xml = call_user_func($xml);
 		}
-		else {
-			if (is_callable($xml)) {
-				$xml = call_user_func($xml);
-			}
-			$markup = $root ? $xml->getRoot()->getMarkup() : $xml->getMarkup();
+		if (!$root) {
+			$xml = $xml->getMarkup();
 		}
-		$this->assertEquals($expectedMarkup, $markup);
+		$this->assertEquals($expectedMarkup, $xml);
 	}
 }

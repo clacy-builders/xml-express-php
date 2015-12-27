@@ -22,6 +22,12 @@ class Attributes extends XmlAttributes
 		parent::setComplexAttrib($name, $value, $delimiter, $check);
 		return $this;
 	}
+
+	public function setBooleanAttrib($name, $value = true, $comparisonAttribute = null)
+	{
+		parent::setBooleanAttrib($name, $value, $comparisonAttribute);
+		return $this;
+	}
 }
 
 class XmlAttributesTest extends \PHPUnit_Framework_TestCase

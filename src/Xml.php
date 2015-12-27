@@ -127,10 +127,7 @@ class Xml
 	 */
 	public function getRoot()
 	{
-		$root = $this->root;
-		if ($root->isRoot())
-			return $root;
-		return $root->getRoot();
+		return $this->root->isRoot() ? $this->root: $this->root->getRoot();
 	}
 
 	/**
@@ -141,9 +138,7 @@ class Xml
 	 */
 	public function getParent($n = null)
 	{
-		if ($n > 1)
-			return $this->parent->getParent(--$n);
-		return $this->parent;
+		return ($n > 1) ? $this->parent->getParent(--$n) : $this->parent;
 	}
 
 	/**
@@ -363,11 +358,6 @@ class Xml
 			return $xmlString;
 		}
 
-		$class = get_class($this->getRoot());
-		$xmlDeclaration = $class::XML_DECLARATION;
-		$doctype = $class::DOCTYPE;
-		$sgmlMode = $class::SGML_MODE;
-
 		// no linebreak -> no tabspace
 		$indent1 = $indentation;
 		if ($line == '') {
@@ -380,11 +370,11 @@ class Xml
 		}
 
 		if ($this->isRoot() && !$this->sub) {
-			if ($xmlDeclaration) {
+			if (static::XML_DECLARATION) {
 				$xmlString .= $this->xmlDecl();
 			}
-			if ($doctype != null) {
-				$xmlString .= $doctype . $line;
+			if (static::DOCTYPE) {
+				$xmlString .= static::DOCTYPE . $line;
 			}
 		}
 		if (count($this->children) > 0) {
@@ -411,7 +401,7 @@ class Xml
 			$xmlString .= $indent3 . $this->closingTag();
 		}
 		else {
-			$xmlString .= $indent1 . $this->element($sgmlMode, $indent1, $line, $this->cdata);
+			$xmlString .= $indent1 . $this->element($indent1, $line, $this->cdata);
 		}
 		return $xmlString;
 	}
@@ -743,10 +733,10 @@ class Xml
 	}
 
 	/* element without Children */
-	private function element($sgmlMode, $indent, $line, $cdata)
+	private function element($indent, $line, $cdata)
 	{
-		if ($this->content === null || (empty($this->content) && !$sgmlMode)) {
-			return $this->standaloneTag($sgmlMode);
+		if ($this->content === null || (empty($this->content) && !static::SGML_MODE)) {
+			return $this->standaloneTag();
 		}
 		else {
 			$content = $this->prepareContent($this->content, $indent, $line);
@@ -767,9 +757,9 @@ class Xml
 		return '</' . $this->name . '>';
 	}
 
-	private function standaloneTag($sgmlMode)
+	private function standaloneTag()
 	{
-		return '<' . $this->name . $this->attributes->str() . ($sgmlMode ? '>' : '/>');
+		return '<' . $this->name . $this->attributes->str() . (static::SGML_MODE ? '>' : '/>');
 	}
 
 	private function xmlDecl()

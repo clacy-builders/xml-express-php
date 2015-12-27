@@ -8,13 +8,10 @@ require_once __DIR__ . '/../src/Adhoc.php';
 require_once __DIR__ . '/Express_TestCase.php';
 require_once __DIR__ . '/classes.php';
 
-use ML_Express\XmlAttributes;
 use ML_Express\XML;
-use ML_Express\Adhoc;
 
 class XmlTest extends Express_TestCase
 {
-
 	public function provider()
 	{
 		return array(
@@ -119,7 +116,7 @@ class XmlTest extends Express_TestCase
 				array(
 						(new Compact('e'))->inject((new Xml)
 								->append('f1')->r_()->append('f2')->r_()),
-						"<e><f1><f2></e>"
+						"<e><f1/><f2/></e>"
 				),
 
 				// cdata()
@@ -334,7 +331,16 @@ class XmlTest extends Express_TestCase
 				// r_(), getRoot()
 				array(
 						Xml::cl_('e')->append('f')->append('g')->append('h')->r_(),
-						'<e><f><g><h/></g></f></e>'
+						'<e><f><g><h/></g></f></e>', false
+				),
+				array(
+					function() {
+						$e1 = (new Compact('r1'))->append('e1');
+						$e2 = (new Xml('r2'))->append('e2');
+						$e1->inject($e2->r_());
+						return $e2->getRoot();
+					},
+					'<r1><e1><r2><e2/></r2></e1></r1>', false
 				),
 
 				// t_(), pt_(), plt_()

@@ -47,22 +47,22 @@ class Html extends Xml
 
 class Foo extends Xml
 {
-	const XML_NAMESPACE = 'https://example.com/foo/1.0';
+	const XML_DECLARATION = false;
 	const ROOT_ELEMENT = 'foo';
 
 	public static function createFoo()
 	{
-		return (new Foo(self::ROOT_ELEMENT));
+		return new Foo('foo');
 	}
 }
 
 class Bar extends Xml
 {
-	const XML_NAMESPACE = 'https://example.com/bar/1.0';
+	const XML_DECLARATION = false;
 	const ROOT_ELEMENT = 'bar';
 
 	public static function createBar()
 	{
-		return (new Bar(self::ROOT_ELEMENT));
+		return new Bar('bar');
 	}
 }

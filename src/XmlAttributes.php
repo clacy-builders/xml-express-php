@@ -112,7 +112,7 @@ class XmlAttributes
 				$value = $value === $compare;
 			}
 		}
-		return $this->setAttrib($name, $value);
+		$this->setAttrib($name, $value);
 	}
 
 	/**
@@ -157,7 +157,7 @@ class XmlAttributes
 			return '';
 		}
 		if ($value === true) {
-			$class = get_class($this->element->getRoot());
+			$class = get_class($this->element);
 			if ($class::SGML_MODE) {
 				return ' ' . $name;
 			}
