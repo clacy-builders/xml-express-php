@@ -18,6 +18,6 @@ class Express_TestCase extends \PHPUnit_Framework_TestCase
 		if (!$root) {
 			$xml = $xml->getMarkup();
 		}
-		$this->assertEquals($expectedMarkup, $xml);
+		$this->assertEquals($expectedMarkup, '' . $xml);
 	}
 }

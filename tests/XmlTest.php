@@ -309,6 +309,23 @@ class XmlTest extends Express_TestCase
 						Xml::c_('e')->setXmlns('http://www.w3.org/1999/xhtml', 'xhtml'),
 						'<e xmlns:xhtml="http://www.w3.org/1999/xhtml"/>'
 				),
+				array(
+						Xml::c_('e')->setXmlns(['http://examples.org/foo',
+								'b' => 'http://examples.org/bar']),
+						'<e xmlns="http://examples.org/foo" xmlns:b="http://examples.org/bar"/>'
+				),
+				array(
+						Xml::c_('e')
+							->setXmlns('http://examples.org/foo')
+							->setXmlns(['b' => 'http://examples.org/bar']),
+						'<e xmlns="http://examples.org/foo" xmlns:b="http://examples.org/bar"/>'
+				),
+				array(
+						Xml::c_('e')
+							->setXmlns('http://examples.org/foo')
+							->setXmlns([]),
+						'<e xmlns="http://examples.org/foo"/>'
+				),
 
 				// p_(), getParent()
 				array(
@@ -351,6 +368,20 @@ class XmlTest extends Express_TestCase
 				array(
 						Xml::c_('e', 'lorem')->append('f', 'ipsum')->plt_('dolor'),
 						"<e>lorem<f>ipsum</f>dolor</e>"
+				),
+
+				// NAMESP_PREFIX
+				array(
+						(new Bar('bar'))->inject((new FFoo('foo'))->append('f')->r_()),
+						'<bar><f:foo><f:f/></f:foo></bar>'
+				),
+
+				// createRoot()
+				array(
+						Baz::createBaz(['f' => 'http://example.com/foo',
+								'b' => 'http://example.com/bar']),
+						'<baz xmlns="http://example.com/baz" xmlns:f="http://example.com/foo" ' .
+						'xmlns:b="http://example.com/bar"/>'
 				),
 		);
 	}

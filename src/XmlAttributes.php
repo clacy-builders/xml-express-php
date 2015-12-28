@@ -158,7 +158,7 @@ class XmlAttributes
 		}
 		if ($value === true) {
 			$class = get_class($this->element);
-			if ($class::SGML_MODE) {
+			if ($class::HTML_MODE) {
 				return ' ' . $name;
 			}
 			else {

@@ -15,7 +15,7 @@ class ClassAttrXml extends Xml
 {
 	use ClassAttribute;
 
-	const SGML_MODE = true;
+	const HTML_MODE = true;
 
 	public function table()
 	{

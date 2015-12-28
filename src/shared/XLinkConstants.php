@@ -4,6 +4,8 @@ namespace ML_Express\Shared;
 
 interface XLinkConstants
 {
+	const XLINK_NAMESPACE = 'http://www.w3.org/1999/xlink';
+
 	const XLINK_TYPE_SIMPLE = 'simple';
 
 	const XLINK_SHOW_EMBED = 'embed';

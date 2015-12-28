@@ -9,14 +9,13 @@ class TestXml extends Xml
 {
 	const MIME_TYPE = 'application/vnd.ml-express.tml+xml';
 	const FILENAME_EXTENSION = 'tml';
-	const ROOT_ELEMENT = 'tml';
 	const XML_VERSION = '1.1';
 	const CHARACTER_ENCODING = 'ISO-8859-15';
 }
 
 class TestSgml extends TestXml
 {
-	const SGML_MODE = true;
+	const HTML_MODE = true;
 	const XML_DECLARATION = false;
 	const DOCTYPE = '<!DOCTYPE tml>';
 }
@@ -31,8 +30,8 @@ class Html extends Xml
 {
 	use Adhoc;
 
-	const doctype = '<!DOCTYPE html>';
-	const SGML_MODE = true;
+	const DOCTYPE = '<!DOCTYPE html>';
+	const HTML_MODE = true;
 
 	public static function createHtml($lang = null, $manifest = null)
 	{
@@ -48,21 +47,25 @@ class Html extends Xml
 class Foo extends Xml
 {
 	const XML_DECLARATION = false;
-	const ROOT_ELEMENT = 'foo';
-
-	public static function createFoo()
-	{
-		return new Foo('foo');
-	}
+	const DEFAULT_LINE_BREAK = '';
 }
 
 class Bar extends Xml
 {
 	const XML_DECLARATION = false;
-	const ROOT_ELEMENT = 'bar';
+	const DEFAULT_LINE_BREAK = '';
+}
 
-	public static function createBar()
-	{
-		return new Bar('bar');
+class FFoo extends Foo
+{
+	const NAMESP_PREFIX = 'f:';
+}
+
+class Baz extends Bar
+{
+	const XML_NAMESPACE = 'http://example.com/baz';
+
+	public static function createBaz($namespaces = []) {
+		return static::createRoot('baz', $namespaces);
 	}
 }

@@ -20,9 +20,10 @@ class Xml
 	const XML_DECLARATION = true;
 
 	const DOCTYPE = null;
-	const SGML_MODE = false;
-	const ROOT_ELEMENT = null;
+	const HTML_MODE = false;
 	const XML_NAMESPACE = null;
+	const NAMESP_PREFIX = '';
+
 	const DEFAULT_LINE_BREAK = self::LF;
 	const DEFAULT_INDENTATION = self::HT;
 	const DEFAULT_LTRIM = true;
@@ -455,12 +456,18 @@ class Xml
 	/**
 	 * Sets the <code>xmlns</code> attribute.
 	 *
-	 * @param  string       $uri
-	 * @param  string|null  $prefix
+	 * @param  string|array  $uri
+	 * @param  string|null   $prefix
 	 * @return Xml
 	 */
 	public function setXmlns($uri, $prefix = null)
 	{
+		if (is_array($uri)) {
+			foreach ($uri as $prefix => $uri) {
+				$this->setXmlns($uri, $prefix);
+			}
+			return $this;
+		}
 		return $this->attrib(empty($prefix) ? 'xmlns' : 'xmlns:' . $prefix, $uri);
 	}
 
@@ -711,18 +718,16 @@ class Xml
 	}
 
 	/**
-	 * Intended for call inside factory method.
+	 * Intended for call inside format specific public factory method.
 	 *
-	 * Requires that <code>ROOT_ELEMENT</code> constant is set.
-	 *
+	 * @param  string  $name        Name of the root element.
+	 * @param  array   $namespaces  Key: prefix; value: uri.
 	 * @return Xml
 	 */
-	protected static function createRoot()
+	protected static function createRoot($name, $namespaces = [])
 	{
 		$class = get_called_class();
-		$element = new $class(static::ROOT_ELEMENT, '');
-		$element->setXmlns(static::XML_NAMESPACE);
-		return $element;
+		return (new $class($name, ''))->setXmlns(static::XML_NAMESPACE)->setXmlns($namespaces);
 	}
 
 	private function setAncestorOption($options, $key)
@@ -735,7 +740,7 @@ class Xml
 	/* element without Children */
 	private function element($indent, $line, $cdata)
 	{
-		if ($this->content === null || (empty($this->content) && !static::SGML_MODE)) {
+		if ($this->content === null || (empty($this->content) && !static::HTML_MODE)) {
 			return $this->standaloneTag();
 		}
 		else {
@@ -749,17 +754,18 @@ class Xml
 
 	private function openingTag()
 	{
-		return '<' . $this->name . $this->attributes->str() . '>';
+		return '<' . static::NAMESP_PREFIX . $this->name . $this->attributes->str() . '>';
 	}
 
 	private function closingTag()
 	{
-		return '</' . $this->name . '>';
+		return '</' . static::NAMESP_PREFIX . $this->name . '>';
 	}
 
 	private function standaloneTag()
 	{
-		return '<' . $this->name . $this->attributes->str() . (static::SGML_MODE ? '>' : '/>');
+		return '<' . static::NAMESP_PREFIX . $this->name .
+				$this->attributes->str() . (static::HTML_MODE ? '>' : '/>');
 	}
 
 	private function xmlDecl()
