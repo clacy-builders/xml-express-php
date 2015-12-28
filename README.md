@@ -48,11 +48,10 @@ class Kml extends Xml
     const MIME_TYPE = 'application/vnd.google-earth.kml+xml';
     const FILENAME_EXTENSION = 'kml';
     const XML_NAMESPACE = 'http://www.opengis.net/kml/2.2';
-    const ROOT_ELEMENT = 'kml';
 
     public static function createKml()
     {
-        return static::createRoot();
+        return static::createRoot('kml');
     }
 
     public function placemark($name, $description, $longitude, $latitude, $altitude = 0)
@@ -107,12 +106,11 @@ class Html extends Xml
 
     const XML_DECLARATION = false;
     const DOCTYPE = '<!DOCTYPE html>';
-    const SGML_MODE = true;
-    const ROOT_ELEMENT = 'html';
+    const HTML_MODE = true;
 
     public static function createHtml($lang = null, $manifest = null)
     {
-        return static::createRoot()
+        return static::createRoot('html')
                 ->attrib('lang', $lang)
                 ->setManifest($manifest);
     }
