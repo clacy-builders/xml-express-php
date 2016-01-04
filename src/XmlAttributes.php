@@ -16,8 +16,7 @@ class XmlAttributes
 	/**
 	 * The constructor.
 	 *
-	 * @param element XML
-	 * <p>The XML element which contains the attributes.</p>
+	 * @param  XML  $element  The XML element which contains the attributes.
 	 */
 	public function __construct(Xml $element)
 	{
@@ -28,12 +27,10 @@ class XmlAttributes
 	/**
 	 * Sets an attribute.
 	 *
-	 * @param name string
-	 * <p>Name of the attribute.</p>
-	 *
-	 * @param value string|boolean|null
-	 * <p>Value of the attribute. Use <code>true</code> or <code>false</code> for boolean
-	 * attributes like checked, selected in HTML.</p>
+	 * @param  string               $name   Name of the attribute.
+	 * @param  string|boolean|null  $value  Value of the attribute. Use <code>true</code> or
+	 *                                      <code>false</code> for boolean attributes like checked,
+	 *                                      selected in HTML.
 	 */
 	public function setAttrib($name, $value)
 	{
@@ -44,17 +41,10 @@ class XmlAttributes
 	 * Sets or appends to a composable attribute like <code>class</code> (HTML)
 	 * or <code>points</code> (SVG).
 	 *
-	 * @param name string
-	 * <p>Name of the attribute.</p>
-	 *
-	 * @param value string|array|null
-	 * <p>Value of the attribute.</p>
-	 *
-	 * @param delimiter string [optional]
-	 * <p>The boundary string.</p>
-	 *
-	 * @param check boolean [optional]
-	 * <p>Whether multiple entries shall be removed or not.</p>
+	 * @param  string   $name       Name of the attribute.
+	 * @param  mixed    $value      One or more (array) values.
+	 * @param  string   $delimiter  The boundary string.
+	 * @param  boolean  $check      Whether multiple entries shall be removed or not.
 	 */
 	public function setComplexAttrib($name, $value, $delimiter = ' ', $check = false)
 	{
@@ -88,19 +78,11 @@ class XmlAttributes
 	 *
 	 * Helpful for attributes like <code>selected</code> in HTML.
 	 *
-	 * @param name string
-	 * <p>Name of the attribute.</p>
-	 *
-	 * @param value mixed [optional]
-	 * <p>One or more (array) values.
-	 * If is a boolean <code>setBooleanAttrib</code> behaves like <code>setAttrib</code>.</p>
-	 *
-	 * @param comparisonAttribute string [optional]
-	 * <p>Name of other attribute to compare with.
-	 * If is <code>null</code> <code>setBooleanAttrib</code> behaves like <code>setAttrib</code>.
-	 * </p>
+	 * @param  string   $name       Name of the attribute.
+	 * @param  mixed    $value      One or more (array) values.
+	 * @param  string   $delimiter  The boundary string.
+	 * @param  boolean  $check      Whether multiple entries shall be removed or not.
 	 */
-
 	public function setBooleanAttrib($name, $value = true, $comparisonAttribute = null)
 	{
 		if (!is_bool($value) && !is_null($comparisonAttribute)) {
@@ -118,10 +100,8 @@ class XmlAttributes
 	/**
 	 * Returns the value of the attribute.
 	 *
-	 * @param name string
-	 * <p>Name of the attribute.</p>
-	 *
-	 * @return string|boolean|null
+	 * @param  string  $name  Name of the attribute.
+	 * @return mixed
 	 */
 	public function getAttrib($name)
 	{
@@ -145,9 +125,7 @@ class XmlAttributes
 	/**
 	 * Returns the string representation of a single attribute.
 	 *
-	 * @param name string
-	 * <p>Name of the attribute.</p>
-	 *
+	 * @param  string  $name  Name of the attribute.
 	 * @return string
 	 */
 	public function getAttribStr($name)

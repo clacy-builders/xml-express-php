@@ -47,4 +47,23 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 				[$obj, ['level', 'whatever'], ['level']]
 		);
 	}
+
+	/**
+	 * @dataProvider valuesProvider
+	 */
+	public function testValues($obj, $expected)
+	{
+		$values = \ML_Express\values($obj);
+		$this->assertEquals($expected, $values);
+	}
+
+	public function valuesProvider()
+	{
+		$arr = array('name' => 'Foo', 'level' => 1, 'points' => '12500');
+		$obj = (object) $arr;
+		return array(
+				[$arr, ['Foo', 1, '12500']],
+				[$obj, ['Foo', 1, '12500']]
+		);
+	}
 }

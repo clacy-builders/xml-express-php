@@ -28,6 +28,14 @@ function arrays($array1, $array2)
 	return array($array1, $array2);
 }
 
+function values($obj)
+{
+	if (is_object($obj)) {
+		$obj = get_object_vars($obj);
+	}
+	return array_values($obj);
+}
+
 function value($obj, $key)
 {
 	if (is_array($obj) && isset($obj[$key])) {

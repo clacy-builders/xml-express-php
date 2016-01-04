@@ -14,11 +14,8 @@ trait StyleAttribute
 	 * <li><code>setStyle(['width' => '40em', 'color' => '#369'])</code>
 	 * </ul>
 	 *
-	 * @param style string|array|null
-	 * <p>See examples above.</p>
-	 *
-	 * @param value string [optional]
-	 * <p>See first example above.</p>
+	 * @param  string|string[]|null  $style
+	 * @param  string                $value  See first example above.
 	 */
 	public function setStyle($style, $value = null)
 	{

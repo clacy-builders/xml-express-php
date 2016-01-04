@@ -7,8 +7,9 @@ trait ClassAttribute
 	/**
 	 * Appends one or more class names to the class attribute.
 	 *
-	 * @param className string|array|null
-	 * <p>A class or a space separated list of classes or an array of classes.</p>
+	 * @param  string|string[]|null  $class  A class or a space separated list of classes
+	 *                                       or an array of classes.
+	 * @return Xml
 	 */
 	public function setClass($class)
 	{
@@ -18,8 +19,9 @@ trait ClassAttribute
 	/**
 	 * Adds alternating classes to child elements.
 	 *
-	 * @param classes string[]
-	 * @param column int|false
+	 * @param  string[]   $classes
+	 * @param  int|false  $column
+	 * @return Xml
 	 */
 	public function stripes($classes, $column = false)
 	{
