@@ -12,6 +12,11 @@ class Express_TestCase extends \PHPUnit_Framework_TestCase
 	 */
 	public function test($xml, $expectedMarkup, $root = true)
 	{
+		$this->assertExpectedMarkup($xml, $expectedMarkup, $root);
+	}
+
+	public function assertExpectedMarkup($xml, $expectedMarkup, $root = true)
+	{
 		if (is_callable($xml)) {
 			$xml = call_user_func($xml);
 		}
