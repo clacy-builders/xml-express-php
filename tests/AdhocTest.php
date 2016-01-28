@@ -2,7 +2,8 @@
 
 namespace ML_Express\Tests;
 
-require_once __DIR__ . '/../src/XmlAttributes.php';
+require_once __DIR__ . '/../src/Markup.php';
+require_once __DIR__ . '/../src/Attributes.php';
 require_once __DIR__ . '/../src/Xml.php';
 require_once __DIR__ . '/../src/Adhoc.php';
 require_once __DIR__ . '/Express_TestCase.php';

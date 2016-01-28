@@ -6,7 +6,7 @@ namespace ML_Express;
  * Simplifies respectively unifies the creation of XML documents.
  *
  */
-class Xml
+class Xml extends Markup
 {
 	const MIME_TYPE = 'application/xml';
 	const FILENAME_EXTENSION = 'xml';
@@ -51,10 +51,8 @@ class Xml
 	const CDATA_START = '<![CDATA[';
 	const CDATA_STOP = ']]>';
 
-	protected $name;
-	protected $content;
 	protected $cdata;
-	protected $attributes;
+	protected $processingInstr;
 	protected $options;
 	protected $children;
 	protected $parent;
@@ -94,12 +92,13 @@ class Xml
 						self::OPTION_TEXT_MODE => static::DEFAULT_TEXT_MODE
 				];
 			}
+			$this->processingInstr = array();
 		}
 		$this->name = $name;
 		$this->content = $content;
 		$this->cdata = false;
 		$class = get_class($this->getRoot());
-		$this->attributes = new XmlAttributes($this);
+		$this->attributes = new Attributes($this);
 		$this->children = array();
 		$this->parent = $parent;
 	}
@@ -294,49 +293,6 @@ class Xml
 	}
 
 	/**
-	 * Appends a new or sets an already existing attribute.
-	 *
-	 * @param  string  $name   Name of the attribute.
-	 * @param  mixed   $value  Value of the attribute.
-	 * @return Xml
-	 */
-	public function attrib($name, $value)
-	{
-		$this->attributes->setAttrib($name, $value);
-		return $this;
-	}
-
-	/**
-	 * Sets or appends to a composable attribute.
-	 *
-	 * @param  string   $name       Name of the attribute.
-	 * @param  mixed    $value      One or more (array) values.
-	 * @param  string   $delimiter  The boundary string.
-	 * @param  boolean  $check      Whether multiple entries shall be removed or not.
-	 * @return Xml
-	 */
-	public function complexAttrib($name, $value, $delimiter = ' ', $check = false)
-	{
-		$this->attributes->setComplexAttrib($name, $value, $delimiter, $check);
-		return $this;
-	}
-
-	/**
-	 * Sets a boolean attribute, if applicable by comparing a value with the value of another
-	 * attribute.
-	 *
-	 * @param  string  $name                 Name of the attribute.
-	 * @param  mixed   $value                Boolean or one or more (array) values.
-	 * @param  string  $comparisonAttribute  Name of the other attribute to compare with.
-	 * @return Xml
-	 */
-	public function booleanAttrib($name, $value = true, $comparisonAttribute = null)
-	{
-		$this->attributes->setBooleanAttrib($name, $value, $comparisonAttribute);
-		return $this;
-	}
-
-	/**
 	 * Generates the desired markup.
 	 *
 	 * @param  string  $indentation  Initial indentation.
@@ -373,6 +329,11 @@ class Xml
 		if ($this->isRoot() && !$this->sub) {
 			if (static::XML_DECLARATION) {
 				$xmlString .= $this->xmlDecl();
+			}
+			if (count($this->processingInstr) > 0) {
+				foreach ($this->processingInstr as $instr) {
+					$xmlString .= $instr->getMarkup() . $line;
+				}
 			}
 			if (static::DOCTYPE) {
 				$xmlString .= static::DOCTYPE . $line;
@@ -469,6 +430,12 @@ class Xml
 			return $this;
 		}
 		return $this->attrib(empty($prefix) ? 'xmlns' : 'xmlns:' . $prefix, $uri);
+	}
+
+	public function addProcessingInstr($target, $content = null, Attributes $attributes = null)
+	{
+		$this->processingInstr[] = new ProcessingInstruction($target, $content, $attributes);
+		return $this;
 	}
 
 	/**
@@ -770,7 +737,7 @@ class Xml
 
 	private function xmlDecl()
 	{
-		$attributes = new XmlAttributes($this);
+		$attributes = new Attributes($this);
 		$attributes->setAttrib('version', static::XML_VERSION);
 		$attributes->setAttrib('encoding', static::CHARACTER_ENCODING);
 		return '<?xml' . $attributes->str() . ' ?>' . $this->getOption(self::OPTION_LINE_BREAK);

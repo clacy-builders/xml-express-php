@@ -2,7 +2,7 @@
 
 namespace ML_Express\Tests\Shared;
 
-require_once __DIR__ . '/../../src/XmlAttributes.php';
+require_once __DIR__ . '/../../src/Attributes.php';
 require_once __DIR__ . '/../../src/Xml.php';
 require_once __DIR__ . '/../../src/shared/ClassAttribute.php';
 require_once __DIR__ . '/../Express_TestCase.php';

@@ -2,7 +2,9 @@
 
 namespace ML_Express\Tests;
 
-require_once __DIR__ . '/../src/XmlAttributes.php';
+require_once __DIR__ . '/../src/Markup.php';
+require_once __DIR__ . '/../src/Attributes.php';
+require_once __DIR__ . '/../src/ProcessingInstruction.php';
 require_once __DIR__ . '/../src/Xml.php';
 require_once __DIR__ . '/../src/Adhoc.php';
 require_once __DIR__ . '/Express_TestCase.php';
@@ -382,6 +384,16 @@ class XmlTest extends Express_TestCase
 								'b' => 'http://example.com/bar']),
 						'<baz xmlns="http://example.com/baz" xmlns:f="http://example.com/foo" ' .
 						'xmlns:b="http://example.com/bar"/>'
+				),
+
+				// addProcessingInstr()
+				array(
+						(new Xml('xml'))->addProcessingInstr('target', 'lorem ipsum'),
+						self::XML_DECL . "\n<?target lorem ipsum ?>\n<xml/>"
+				),
+				array(
+						(new Xml('xml'))->inLine()->addProcessingInstr('target', 'lorem ipsum'),
+						self::XML_DECL . "<?target lorem ipsum ?><xml/>"
 				),
 		);
 	}

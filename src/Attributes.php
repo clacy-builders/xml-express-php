@@ -7,7 +7,7 @@ namespace ML_Express;
  *
  * @author M. Hoffmann
  */
-class XmlAttributes
+class Attributes
 {
 	private $element;
 
