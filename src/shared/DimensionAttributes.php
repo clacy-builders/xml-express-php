@@ -14,7 +14,7 @@ trait DimensionAttributes
 		return $this->attrib('height', $height);
 	}
 
-	public function setDimension($width, $height)
+	public function setDimensions($width, $height)
 	{
 		return $this->setWidth($width)->setHeight($height);
 	}
