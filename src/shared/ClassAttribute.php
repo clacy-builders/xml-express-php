@@ -5,7 +5,7 @@ namespace ML_Express\Shared;
 trait ClassAttribute
 {
 	/**
-	 * Appends one or more class names to the class attribute.
+	 * Appends one or more class names to the <code>class</code> attribute.
 	 *
 	 * @param  string|string[]|null  $class  A class or a space separated list of classes
 	 *                                       or an array of classes.

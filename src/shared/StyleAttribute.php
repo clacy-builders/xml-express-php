@@ -5,7 +5,7 @@ namespace ML_Express\Shared;
 trait StyleAttribute
 {
 	/**
-	 * Appends one or more CSS properties to the style attribute.
+	 * Appends one or more CSS properties to the <code>style</code> attribute.
 	 *
 	 * Examples:<ul>
 	 * <li><code>setStyle('width', '40em')</code>
@@ -14,8 +14,8 @@ trait StyleAttribute
 	 * <li><code>setStyle(['width' => '40em', 'color' => '#369'])</code>
 	 * </ul>
 	 *
-	 * @param  string|string[]|null  $style
-	 * @param  string                $value  See first example above.
+	 * @param  string|array  $style
+	 * @param  string|null   $value  See first example above.
 	 */
 	public function setStyle($style, $value = null)
 	{
