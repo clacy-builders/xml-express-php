@@ -2,20 +2,15 @@
 
 namespace ML_Express\Shared;
 
-trait HrefAttribute
+trait AddQuery
 {
-	public function setHref($href)
-	{
-		return $this->attrib('href', $href);
-	}
-
 	/**
-	 * Adds a query string to an attribute, by default to the <code>href</code> attribute.
+	 * Adds a query string to an attribute, by default to the <code>xml:href</code> attribute.
 	 *
 	 * @param  array   $queryParts  Assotiave array with query arguments.
 	 * @param  string  $attribute   Name of the attribute.
 	 */
-	public function addQuery($queryParts, $attribute = 'href')
+	public function addQuery($queryParts, $attribute = 'xml:href')
 	{
 		$url = $this->attributes->getAttrib($attribute);
 
@@ -35,5 +30,4 @@ trait HrefAttribute
 		}
 		return $this->attrib($attribute, substr_replace($url, $query, $position, 0));
 	}
-
 }
