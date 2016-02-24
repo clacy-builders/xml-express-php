@@ -18,7 +18,7 @@ class Attributes
 	 *
 	 * @param  XML  $element  The XML element which contains the attributes.
 	 */
-	public function __construct(Xml $element)
+	public function __construct(Xml $element = null)
 	{
 		$this->element = $element;
 		$this->attributes = array();
@@ -135,13 +135,13 @@ class Attributes
 			return '';
 		}
 		if ($value === true) {
-			$class = get_class($this->element);
-			if ($class::HTML_MODE) {
-				return ' ' . $name;
+			if ($this->element) {
+				$class = get_class($this->element);
+				if ($class::HTML_MODE) {
+					return ' ' . $name;
+				}
 			}
-			else {
-				$value = $name;
-			}
+			$value = $name;
 		}
 		return ' ' . $name . '="' . $value . '"';
 	}

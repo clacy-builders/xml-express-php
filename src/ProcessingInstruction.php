@@ -4,11 +4,16 @@ namespace ML_Express;
 
 class ProcessingInstruction extends Markup
 {
-	public function __construct($target, $content = null, Attributes $attributes = null)
+	protected function __construct($target, $content = null)
 	{
 		$this->name = $target;
 		$this->content = $content;
-		$this->attributes = $attributes;
+		$this->attributes = new Attributes();
+	}
+
+	public static function createProcessingInstruction($target, $content = null)
+	{
+		return new ProcessingInstruction($target, $content);
 	}
 
 	public function getMarkup()
@@ -22,5 +27,10 @@ class ProcessingInstruction extends Markup
 		}
 		$str .= ' ?>';
 		return $str;
+	}
+
+	public function __toString()
+	{
+		return $this->getMarkup();
 	}
 }

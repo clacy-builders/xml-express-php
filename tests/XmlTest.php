@@ -388,11 +388,20 @@ class XmlTest extends Express_TestCase
 
 				// addProcessingInstr()
 				array(
-						(new Xml('xml'))->addProcessingInstr('target', 'lorem ipsum'),
+						function() {
+							$xml = new Xml('xml');
+							$xml->addProcessingInstr('target', 'lorem ipsum');
+							return $xml;
+						},
 						self::XML_DECL . "\n<?target lorem ipsum ?>\n<xml/>"
 				),
 				array(
-						(new Xml('xml'))->inLine()->addProcessingInstr('target', 'lorem ipsum'),
+						function() {
+							$xml = new Xml('xml');
+							$xml->inLine();
+							$xml->addProcessingInstr('target', 'lorem ipsum');
+							return $xml;
+						},
 						self::XML_DECL . "<?target lorem ipsum ?><xml/>"
 				),
 		);

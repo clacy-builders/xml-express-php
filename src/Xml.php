@@ -432,10 +432,10 @@ class Xml extends Markup
 		return $this->attrib(empty($prefix) ? 'xmlns' : 'xmlns:' . $prefix, $uri);
 	}
 
-	public function addProcessingInstr($target, $content = null, Attributes $attributes = null)
+	public function addProcessingInstr($target, $content = null)
 	{
-		$this->processingInstr[] = new ProcessingInstruction($target, $content, $attributes);
-		return $this;
+		return $this->processingInstr[] =
+				ProcessingInstruction::createProcessingInstruction($target, $content);
 	}
 
 	/**
@@ -737,10 +737,10 @@ class Xml extends Markup
 
 	private function xmlDecl()
 	{
-		$attributes = new Attributes($this);
-		$attributes->setAttrib('version', static::XML_VERSION);
-		$attributes->setAttrib('encoding', static::CHARACTER_ENCODING);
-		return '<?xml' . $attributes->str() . ' ?>' . $this->getOption(self::OPTION_LINE_BREAK);
+		return ProcessingInstruction::createProcessingInstruction('xml')
+				->attrib('version', static::XML_VERSION)
+				->attrib('encoding', static::CHARACTER_ENCODING) .
+						$this->getOption(self::OPTION_LINE_BREAK);
 	}
 
 	private function prepareContent($content, $indent, $line)
