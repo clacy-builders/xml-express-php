@@ -53,4 +53,15 @@ abstract class Markup
 		$this->attributes->setBooleanAttrib($name, $value, $comparisonAttribute);
 		return $this;
 	}
+
+	/**
+	 * Sets multiple attributes.
+	 *
+	 * @param  array  $attributes  Assotiative array: the keys are the attributes names.
+	 */
+	public function attributes($attributes)
+	{
+		$this->attributes->setAttributes($attributes);
+		return $this;
+	}
 }

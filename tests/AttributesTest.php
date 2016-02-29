@@ -29,6 +29,12 @@ class MyAttributes extends Attributes
 		parent::setBooleanAttrib($name, $value, $comparisonAttribute);
 		return $this;
 	}
+
+	public function setAttributes($attributes)
+	{
+		parent::setAttributes($attributes);
+		return $this;
+	}
 }
 
 class AttributesTest extends \PHPUnit_Framework_TestCase
@@ -200,8 +206,12 @@ class AttributesTest extends \PHPUnit_Framework_TestCase
 								->setBooleanAttrib('b', [true, 'ipsum'], 'a'),
 						' a="lorem"'
 				),
-
-
+				// setAttributes()
+				array(
+						self::attr()->setAttributes(
+								['a' => 'lorem',  'b' => true, 'c' => false, 'd' => null]),
+						' a="lorem" b="b"'
+				)
 		);
 	}
 

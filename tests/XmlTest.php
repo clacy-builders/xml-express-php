@@ -240,6 +240,12 @@ class XmlTest extends Express_TestCase
 						'<option value="php">PHP</option>'
 				),
 
+				// attributes()
+				array(
+						Html::c_('e')->attributes(['a' => 'lorem', 'b' => true, 'c' => false]),
+						'<e a="lorem" b>'
+				),
+
 				// prepareContent(): content with linebreaks
 				array(
 						Xml::c_('e')->append('e', 'The quick brown fox

@@ -98,6 +98,18 @@ class Attributes
 	}
 
 	/**
+	 * Sets multiple attributes.
+	 *
+	 * @param  array  $attributes  Assotiative array: the keys are the attributes names.
+	 */
+	public function setAttributes($attributes)
+	{
+		foreach ($attributes as $name => $value) {
+			$this->setAttrib($name, $value);
+		}
+	}
+
+	/**
 	 * Returns the value of the attribute.
 	 *
 	 * @param  string  $name  Name of the attribute.

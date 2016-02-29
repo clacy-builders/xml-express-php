@@ -9,9 +9,8 @@ use ML_Express\Xml;
 use ML_Express\Shared\XmlStylesheet;
 use ML_Express\Tests\Express_TestCase;
 use ML_Express\Shared\MediaAttributeConstants;
-use ML_Express\Shared\MediaAttribute;
 
-class StyledXml extends Xml implements MediaAttributeConstants// implements XmlStylesheetConstants
+class StyledXml extends Xml implements MediaAttributeConstants
 {
 	use XmlStylesheet;
 
