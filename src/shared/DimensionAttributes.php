@@ -6,7 +6,7 @@ trait DimensionAttributes
 {
 	/**
 	 * Sets the <code>width</code> attribute.
-	 * 
+	 *
 	 * @param  mixed  $width   CSS pixels (Html5), for SVG also a string: '160px', '10em' etc.
 	 * @return Xml
 	 */
@@ -17,18 +17,18 @@ trait DimensionAttributes
 
 	/**
 	 * Sets the <code>height</code> attribute.
-	 * 
+	 *
 	 * @param  mixed  $height  CSS pixels (Html5), for SVG also a string: '160px', '10em' etc.
 	 * @return Xml
 	 */
 	public function setHeight($height)
 	{
-		return $this->setattrib('height', $height);
+		return $this->attrib('height', $height);
 	}
 
 	/**
 	 * Sets the <code>width</code> and <code>height</code> attributes.
-	 * 
+	 *
 	 * @param  mixed  $width   CSS pixels (Html5), for SVG also a string: '160px', '10em' etc.
 	 * @param  mixed  $height  CSS pixels (Html5), for SVG also a string: '160px', '10em' etc.
 	 * @return Xml
