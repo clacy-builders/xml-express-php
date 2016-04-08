@@ -14,7 +14,7 @@ class Xml extends Markup
 	/** Most commonly '1.0' */
 	const XML_VERSION = self::XML_VERSION_1_0;
 
-	const CHARACTER_ENCODING = self::UTF8;
+	const CHARACTER_ENCODING = 'UTF-8';
 
 	/** Whether the document should begin with a xml declaration or not. */
 	const XML_DECLARATION = true;
@@ -43,7 +43,6 @@ class Xml extends Markup
 
 	const XML_VERSION_1_0 = '1.0';
 	const XML_VERSION_1_1 = '1.1';
-	const UTF8 = 'UTF-8';
 	const LF = "\n";
 	const CR = "\r";
 	const HT = "\t";

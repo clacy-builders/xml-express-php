@@ -9,7 +9,7 @@ Add the following to your project's `composer.json` file:
 {
     "minimum-stability": "dev",
     "require": {
-        "ml-express/xml": "dev-master@dev"
+        "ml-express/xml": "0.1"
     }
 }
 ```
@@ -19,9 +19,9 @@ Run `composer install` or `composer update`.
 
 ### Without Composer
 
- 1. Download the [ZIP file](https://github.com/ml-express/xml-express-php/archive/master.zip).
+ 1. Download the [ZIP file](https://github.com/hoffmann-os/xml-express-php/archive/0.1.zip).
  2. Inside your project directory create the directories `/vendor/ml-express/xml`.
- 3. From the folder `xml-express-php-master` inside the ZIP file copy the files it contains
+ 3. From the folder `xml-express-php-0.1` inside the ZIP file copy the files it contains
     into the previously created `xml` folder.
 
 Replace
