@@ -1,8 +1,8 @@
 <?php
 
-namespace ML_Express\Tests;
+namespace ClacyBuilders\Tests;
 
-class Express_TestCase extends \PHPUnit_Framework_TestCase
+class ClacyBuilders_TestCase extends \PHPUnit_Framework_TestCase
 {
 	const XML_DECL = '<?xml version="1.0" encoding="UTF-8" ?>';
 	const LI = 'lorem ipsum';

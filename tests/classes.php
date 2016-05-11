@@ -1,9 +1,9 @@
 <?php
 
-namespace ML_Express\Tests;
+namespace ClacyBuilders\Tests;
 
-use ML_Express\Xml;
-use ML_Express\Adhoc;
+use ClacyBuilders\Xml;
+use ClacyBuilders\Adhoc;
 
 class TestXml extends Xml
 {

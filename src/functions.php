@@ -1,6 +1,6 @@
 <?php
 
-namespace ML_Express;
+namespace ClacyBuilders;
 
 function arrays($array1, $array2)
 {
@@ -12,11 +12,11 @@ function arrays($array1, $array2)
 		$arr1 = array();
 		$arr2 = array();
 		if (!isset($array2)) {
-			$array2 = \ML_Express\keys($array1[0]);
+			$array2 = \ClacyBuilders\keys($array1[0]);
 		}
 		foreach ($array1 as $i => $arr) {
-			$arr1[] = \ML_Express\value($arr, $array2[0]);
-			$arr2[] = \ML_Express\value($arr, $array2[1]);
+			$arr1[] = \ClacyBuilders\value($arr, $array2[0]);
+			$arr2[] = \ClacyBuilders\value($arr, $array2[1]);
 		}
 		$array1 = $arr1;
 		$array2 = $arr2;
@@ -59,13 +59,6 @@ function keys($obj, $keys = null)
 		return array_intersect($keys, $existingKeys);
 	}
 	return $existingKeys;
-}
-
-function join($value, $glue = ' ')
-{
-	if (empty($value)) return null;
-	if (is_array($value)) return implode($glue, $value);
-	return $value;
 }
 
 function formatDateTime(\DateTime $datetime, $format, $encoding = XML::UTF8) {

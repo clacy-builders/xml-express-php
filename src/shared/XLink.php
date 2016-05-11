@@ -1,6 +1,6 @@
 <?php
 
-namespace ML_Express\Shared;
+namespace ClacyBuilders\Shared;
 
 /**
  * The XLink attributes, but for element type <code>simple</code> only.

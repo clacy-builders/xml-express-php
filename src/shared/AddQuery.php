@@ -1,6 +1,6 @@
 <?php
 
-namespace ML_Express\Shared;
+namespace ClacyBuilders\Shared;
 
 trait AddQuery
 {

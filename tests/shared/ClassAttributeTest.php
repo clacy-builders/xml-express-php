@@ -1,15 +1,15 @@
 <?php
 
-namespace ML_Express\Tests\Shared;
+namespace ClacyBuilders\Tests\Shared;
 
 require_once __DIR__ . '/../../src/Attributes.php';
 require_once __DIR__ . '/../../src/Xml.php';
 require_once __DIR__ . '/../../src/shared/ClassAttribute.php';
-require_once __DIR__ . '/../Express_TestCase.php';
+require_once __DIR__ . '/../ClacyBuilders_TestCase.php';
 
-use ML_Express\Xml;
-use ML_Express\Shared\ClassAttribute;
-use ML_Express\Tests\Express_TestCase;
+use ClacyBuilders\Xml;
+use ClacyBuilders\Shared\ClassAttribute;
+use ClacyBuilders\Tests\ClacyBuilders_TestCase;
 
 class ClassAttrXml extends Xml
 {
@@ -49,7 +49,7 @@ class ClassAttrXml extends Xml
 	}
 }
 
-class ClassAttributeTest extends Express_TestCase
+class ClassAttributeTest extends ClacyBuilders_TestCase
 {
 	public function provider()
 	{

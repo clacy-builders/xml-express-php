@@ -1,18 +1,18 @@
 <?php
 
-namespace ML_Express\Tests;
+namespace ClacyBuilders\Tests;
 
 require_once __DIR__ . '/../src/Markup.php';
 require_once __DIR__ . '/../src/Attributes.php';
 require_once __DIR__ . '/../src/ProcessingInstruction.php';
 require_once __DIR__ . '/../src/Xml.php';
 require_once __DIR__ . '/../src/Adhoc.php';
-require_once __DIR__ . '/Express_TestCase.php';
+require_once __DIR__ . '/ClacyBuilders_TestCase.php';
 require_once __DIR__ . '/classes.php';
 
-use ML_Express\Xml;
+use ClacyBuilders\Xml;
 
-class XmlTest extends Express_TestCase
+class XmlTest extends ClacyBuilders_TestCase
 {
 	public function provider()
 	{

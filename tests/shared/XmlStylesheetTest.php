@@ -1,14 +1,14 @@
 <?php
 
-namespace ML_Express\Tests\Shared;
+namespace ClacyBuilders\Tests\Shared;
 
 require_once __DIR__ . '/../../allIncl.php';
-require_once __DIR__ . '/../Express_TestCase.php';
+require_once __DIR__ . '/../ClacyBuilders_TestCase.php';
 
-use ML_Express\Xml;
-use ML_Express\Shared\XmlStylesheet;
-use ML_Express\Tests\Express_TestCase;
-use ML_Express\Shared\MediaAttributeConstants;
+use ClacyBuilders\Xml;
+use ClacyBuilders\Shared\XmlStylesheet;
+use ClacyBuilders\Tests\ClacyBuilders_TestCase;
+use ClacyBuilders\Shared\MediaAttributeConstants;
 
 class StyledXml extends Xml implements MediaAttributeConstants
 {
@@ -20,7 +20,7 @@ class StyledXml extends Xml implements MediaAttributeConstants
 	}
 }
 
-class XmlStylesheetTest extends Express_TestCase
+class XmlStylesheetTest extends ClacyBuilders_TestCase
 {
 	public function provider()
 	{
@@ -29,12 +29,12 @@ class XmlStylesheetTest extends Express_TestCase
 						function() {
 							$xml = StyledXml::createStyled();
 							$xml->xmlStylesheet('one.css', StyledXml::MEDIA_SCREEN, true, 'One',
-									'text/css', StyledXml::UTF8);
+									'text/css', 'UTF-8');
 							$xml->xmlStylesheet('two.css')
 									->setMedia(StyledXml::MEDIA_SCREEN)
 									->setAlternate()
 									->setTitle('Two')
-									->setCharset(StyledXml::UTF8);
+									->setCharset('UTF-8');
 							return $xml;
 						},
 						self::XML_DECL . "\n" .

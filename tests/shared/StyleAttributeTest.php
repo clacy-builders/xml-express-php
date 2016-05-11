@@ -1,23 +1,23 @@
 <?php
 
-namespace ML_Express\Tests\Shared;
+namespace ClacyBuilders\Tests\Shared;
 
 require_once __DIR__ . '/../../src/Attributes.php';
 require_once __DIR__ . '/../../src/Xml.php';
 require_once __DIR__ . '/../../src/shared/StyleAttribute.php';
-require_once __DIR__ . '/../Express_TestCase.php';
+require_once __DIR__ . '/../ClacyBuilders_TestCase.php';
 
-use ML_Express\Attributes;
-use ML_Express\Xml;
-use ML_Express\Shared\StyleAttribute;
-use ML_Express\Tests\Express_TestCase;
+use ClacyBuilders\Attributes;
+use ClacyBuilders\Xml;
+use ClacyBuilders\Shared\StyleAttribute;
+use ClacyBuilders\Tests\ClacyBuilders_TestCase;
 
 class StyleAttrXml extends Xml
 {
 	use StyleAttribute;
 }
 
-class StyleAttributeTest extends Express_TestCase
+class StyleAttributeTest extends ClacyBuilders_TestCase
 {
 	public function provider()
 	{

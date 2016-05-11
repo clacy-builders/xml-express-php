@@ -1,6 +1,6 @@
 <?php
 
-namespace ML_Express\Tests;
+namespace ClacyBuilders\Tests;
 
 require_once __DIR__ . '/../src/functions.php';
 
@@ -11,7 +11,7 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testValue($obj, $key, $expected)
 	{
-		$value = \ML_Express\value($obj, $key);
+		$value = \ClacyBuilders\value($obj, $key);
 		$this->assertEquals($expected, $value);
 	}
 
@@ -32,7 +32,7 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testKeys($obj, $keys, $expected)
 	{
-		$keys = \ML_Express\keys($obj, $keys);
+		$keys = \ClacyBuilders\keys($obj, $keys);
 		$this->assertEquals($expected, $keys);
 	}
 
@@ -53,7 +53,7 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testValues($obj, $expected)
 	{
-		$values = \ML_Express\values($obj);
+		$values = \ClacyBuilders\values($obj);
 		$this->assertEquals($expected, $values);
 	}
 

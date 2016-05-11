@@ -1,7 +1,7 @@
 {
-	"name": "ml-express/xml",
+	"name": "clacy-builders/xml",
 	"type": "library",
-	"description": "XML Express is a library for creating XML documents.",
+	"description": "Clacy Builders XML Express is a library for creating XML documents.",
 	"keywords": ["xml", "builder", "writer"],
 	"license": "MIT",
 	"require": {
@@ -9,7 +9,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"ML_Express\\": "src/"
+			"ClacyBuilders\\": "src/"
 		},
 		"files": ["src/functions.php"]
 	}

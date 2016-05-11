@@ -1,14 +1,14 @@
 <?php
 
-namespace ML_Express\Tests;
+namespace ClacyBuilders\Tests;
 
 require_once __DIR__ . '/../src/Markup.php';
 require_once __DIR__ . '/../src/Attributes.php';
 require_once __DIR__ . '/../src/Xml.php';
 require_once __DIR__ . '/classes.php';
 
-use ML_Express\Attributes;
-use ML_Express\Xml;
+use ClacyBuilders\Attributes;
+use ClacyBuilders\Xml;
 
 class MyAttributes extends Attributes
 {

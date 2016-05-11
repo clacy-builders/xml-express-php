@@ -1,6 +1,6 @@
 <?php
 
-namespace ML_Express;
+namespace ClacyBuilders;
 
 /**
  * Base class for <code>Xml</code> and <code>ProcessingInstruction</code>.

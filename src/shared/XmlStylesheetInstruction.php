@@ -1,8 +1,8 @@
 <?php
 
-namespace ML_Express\Shared;
+namespace ClacyBuilders\Shared;
 
-use ML_Express\ProcessingInstruction;
+use ClacyBuilders\ProcessingInstruction;
 
 class XmlStylesheetInstruction extends ProcessingInstruction
 {

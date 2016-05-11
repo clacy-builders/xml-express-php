@@ -1,6 +1,6 @@
 <?php
 
-namespace ML_Express;
+namespace ClacyBuilders;
 
 /**
  * Simplifies respectively unifies the creation of XML documents.

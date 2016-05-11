@@ -9,7 +9,7 @@ Add the following to your project's `composer.json` file:
 {
     "minimum-stability": "dev",
     "require": {
-        "ml-express/xml": "0.1"
+        "clacy-builders/xml": "dev-master@dev"
     }
 }
 ```
@@ -19,9 +19,9 @@ Run `composer install` or `composer update`.
 
 ### Without Composer
 
- 1. Download the [ZIP file](https://github.com/hoffmann-os/xml-express-php/archive/0.1.zip).
- 2. Inside your project directory create the directories `/vendor/ml-express/xml`.
- 3. From the folder `xml-express-php-0.1` inside the ZIP file copy the files it contains
+ 1. Download the [ZIP file](https://github.com/clacy-builders/xml-express-php/archive/0.1.zip).
+ 2. Inside your project directory create the directories `/vendor/clacy-builders/xml`.
+ 3. From the folder `xml-express-php-master` inside the ZIP file copy the files it contains
     into the previously created `xml` folder.
 
 Replace
@@ -31,7 +31,7 @@ require_once 'vendor/autoload.php';
 
 with
 ```php
-require_once 'vendor/ml-express/xml/allIncl.php';
+require_once 'vendor/clacy-builders/xml/allIncl.php';
 ```
 
 
@@ -41,7 +41,7 @@ require_once 'vendor/ml-express/xml/allIncl.php';
 <?php
 require_once 'vendor/autoload.php';
 
-use \ML_Express\Xml;
+use \ClacyBuilders\Xml;
 
 class Kml extends Xml
 {
@@ -97,8 +97,8 @@ The generated markup:
 <?php
 require_once 'vendor/autoload.php';
 
-use \ML_Express\Xml;
-use \ML_Express\Adhoc;
+use \ClacyBuilders\Xml;
+use \ClacyBuilders\Adhoc;
 
 class Html extends Xml
 {
