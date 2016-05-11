@@ -19,7 +19,7 @@ Run `composer install` or `composer update`.
 
 ### Without Composer
 
- 1. Download the [ZIP file](https://github.com/clacy-builders/xml-express-php/archive/0.1.zip).
+ 1. Download the [ZIP file](https://github.com/clacy-builders/xml-express-php/archive/master.zip).
  2. Inside your project directory create the directories `/vendor/clacy-builders/xml`.
  3. From the folder `xml-express-php-master` inside the ZIP file copy the files it contains
     into the previously created `xml` folder.
