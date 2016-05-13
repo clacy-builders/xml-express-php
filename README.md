@@ -70,12 +70,12 @@ $myKml->placemark('Cologne Cathedral',
         'Cologne Cathedral is a Roman Catholic cathedral in Cologne, Germany.',
         '50.9413', '6.958');
 $myKml->headerfields('cologne-cathedral');
-print $myKml->getMarkup();
+print $myKml;
 ```
 
 The generated markup:
 
-```html
+```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
     <Placemark>
@@ -124,7 +124,7 @@ $article->p(Html::abbr('PHP')->setTitle('PHP: Hypertext Preprocessor') . ' is a
         server-side scripting language designed for web development but also used
         as a general-purpose programming language.');
 
-print $html->getMarkup();
+print $html;
 ```
 
 The generated markup:
@@ -142,3 +142,4 @@ The generated markup:
     </body>
 </html>
 ```
+

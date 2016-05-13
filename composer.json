@@ -1,6 +1,5 @@
 {
 	"name": "clacy-builders/xml",
-	"replace": {"ml-express/xml": "self.version"},
 	"type": "library",
 	"description": "Clacy Builders XML Express is a library for creating XML documents.",
 	"keywords": ["xml", "builder", "writer"],
